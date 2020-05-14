@@ -1,0 +1,18 @@
+.listControls__container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listControls__total span {
+  font-weight: bold;
+  color: #2e9225;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 600px) {
+  .listControls__container {
+    justify-content: space-evenly;
+  }
+}

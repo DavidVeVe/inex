@@ -1,25 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+
+import "./App.css";
+
+import ItemsManager from "./containers/ItemsManager/ItemsManager";
+import Layout from "./hoc/Layout/Layout";
 
 function App() {
+  const [option, setOption] = useState({
+    income: true,
+    expense: false,
+  });
+
+  const [showMenu, setShowMenu] = useState(false);
+
+  const showIncomeHandler = () => {
+    setOption({
+      income: true,
+      expense: false,
+    });
+  };
+
+  const showExpensesHandler = () => {
+    setOption({
+      income: false,
+      expense: true,
+    });
+  };
+
+  const showMenuHandler = () => {
+    setShowMenu(!showMenu);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout
+      showMenu={showMenu}
+      showIncomeComponent={showIncomeHandler}
+      showExpenseComponent={showExpensesHandler}
+    >
+      <ItemsManager
+        menuClicked={showMenuHandler}
+        incomeVersion={option.income}
+      />
+    </Layout>
   );
 }
 

@@ -1,0 +1,35 @@
+.expenseList__container {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2.1rem;
+  color: #6b6b6b;
+  letter-spacing: 3px;
+}
+
+.menuIcon {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .expenseList__container {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    margin-top: 70px;
+  }
+
+  .menuIcon {
+    display: block;
+    width: 25px;
+    margin: 15px;
+    position: absolute;
+    left: 0;
+  }
+}

@@ -1,0 +1,39 @@
+.deletePopup__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.deletePopup__btns {
+  display: flex;
+  justify-content: space-around;
+}
+
+.deletePopup__name {
+  margin: 0;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #646464;
+}
+
+.deletePopup__name-itemName {
+  margin: 0;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #222222;
+}
+
+.deletePopup__name-itemName::first-letter {
+  text-transform: capitalize;
+}
+
+@media (max-width: 600px) {
+  .deletePopup__btns {
+    width: 80%;
+  }
+  .deletePopup__container-q {
+    text-align: center;
+  }
+}

@@ -1,0 +1,36 @@
+.btn {
+  width: 30%;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 20px 0;
+}
+
+.add {
+  background-color: rgb(34, 80, 233);
+}
+
+.add:hover {
+  background-color: #4563c4;
+}
+
+.add2 {
+  background-color: seagreen;
+}
+
+.cancel {
+  background-color: #db7953;
+}
+
+.cancel:hover {
+  background-color: #f77541;
+}
+
+.white {
+  background-color: #ececec;
+}
+.white:hover {
+  background-color: #cacaca;
+}
