@@ -137,6 +137,7 @@ class ItemsManager extends Component {
       : this.props.removeFromExpense(index);
 
     this.setState({ showDeletePopup: false });
+
     // this.setState((prevState) => {
     //   const incomeData = [...prevState.data.income];
     //   const expenseData = [...prevState.data.expense];
