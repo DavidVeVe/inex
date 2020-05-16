@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "./App.css";
 
-import ItemsManager from "./containers/ItemsManager/ItemsManager";
+import Manager from "./containers/Manager/Manager";
 import Layout from "./hoc/Layout/Layout";
 
 function App() {
@@ -37,10 +37,7 @@ function App() {
       showIncomeComponent={showIncomeHandler}
       showExpenseComponent={showExpensesHandler}
     >
-      <ItemsManager
-        menuClicked={showMenuHandler}
-        incomeVersion={option.income}
-      />
+      <Manager menuClicked={showMenuHandler} incomeVersion={option.income} />
     </Layout>
   );
 }
