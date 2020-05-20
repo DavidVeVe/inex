@@ -19,30 +19,9 @@ class ItemsManager extends Component {
     editable: false,
     deleteItemName: "",
     uxDescription: "",
-    showDescription: false,
     showDeletePopup: false,
     selectedItemIndex: null,
   };
-
-  // itemChanged = ({ target }) => {
-  //   if (this.props.incomeVersion) {
-  //     this.setState({
-  //       incomeForm: {
-  //         ...this.state.incomeForm,
-  //         [target.name]: target.value,
-  //       },
-  //       formValidation: true,
-  //     });
-  //   } else {
-  //     this.setState({
-  //       expenseForm: {
-  //         ...this.state.expenseForm,
-  //         [target.name]: target.value,
-  //       },
-  //       formValidation: true,
-  //     });
-  //   }
-  // };
 
   itemDeleted = (index, e) => {
     e.stopPropagation();
@@ -66,10 +45,11 @@ class ItemsManager extends Component {
     }
 
     this.setState({
-      showDeletePopup: !this.state.showDeletePopup,
       selectedItemIndex: index,
       deleteItemName: itemName,
     });
+
+    this.props.toggleDeletePopup();
   };
 
   descriptionToggleHandler = (index) => {
@@ -82,10 +62,11 @@ class ItemsManager extends Component {
     }
 
     this.setState({
-      showDescription: !this.state.showDescription,
       selectedItemIndex: index,
       uxDescription: description,
     });
+
+    this.props.toggleModalDescription();
   };
 
   render() {
@@ -96,7 +77,7 @@ class ItemsManager extends Component {
     return (
       <section className="expenseList__container">
         <DeletePopup
-          showPopup={this.state.showDeletePopup}
+          showPopup={this.props.showDeletePopup}
           togglePopup={this.toggleDeletePopup}
           itemDeleted={this.itemDeleted}
           itemIndex={this.state.selectedItemIndex}
@@ -139,7 +120,7 @@ class ItemsManager extends Component {
         )}
         <ItemsList
           // totalAmount={total}
-          descriptionToggle={this.props.toggleModalDescription}
+          descriptionToggle={this.descriptionToggleHandler}
           itemsValues={
             this.props.incomeVersion
               ? this.props.incomeData

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 
 import "./ItemsList.css";
 
@@ -6,10 +6,6 @@ import ListControls from "../ListControls/ListControls";
 import Item from "../Item/Item";
 
 const ItemsList = (props) => {
-  useEffect(() => {
-    console.log(props.itemsValues);
-  });
-
   const items = props.itemsValues.map((item, index) => {
     return (
       <Item

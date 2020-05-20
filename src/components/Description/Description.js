@@ -1,10 +1,13 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 
 import "./Description.css";
 
 import Button from "../UI/Button/Button";
 
-const description = (props) => {
+const Description = (props) => {
+  useEffect(() => {
+    console.log(props.descriptionValues);
+  });
   return (
     <div className="description__container">
       {props.descriptionValues.description ? (
@@ -31,4 +34,4 @@ const description = (props) => {
     </div>
   );
 };
-export default description;
+export default Description;

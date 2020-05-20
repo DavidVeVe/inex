@@ -92,11 +92,14 @@ class NewItemForm extends Component {
       updatedForm[key] = this.state.newItemForm[key].value;
     }
 
-    console.log(updatedForm);
-    this.props.incomeVersion
-      ? this.props.addToIncome(updatedForm)
-      : this.props.addToExpense(updatedForm);
+    if (this.props.incomeVersion) {
+      delete updatedForm.category;
+      this.props.addToIncome(updatedForm);
+    } else {
+      this.props.addToExpense(updatedForm);
+    }
 
+    console.log(updatedForm);
     this.props.toggleModalForm();
 
     console.log("item added");
