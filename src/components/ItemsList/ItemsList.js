@@ -1,11 +1,15 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 
 import "./ItemsList.css";
 
 import ListControls from "../ListControls/ListControls";
 import Item from "../Item/Item";
 
-const itemsList = (props) => {
+const ItemsList = (props) => {
+  useEffect(() => {
+    console.log(props.itemsValues);
+  });
+
   const items = props.itemsValues.map((item, index) => {
     return (
       <Item
@@ -27,11 +31,7 @@ const itemsList = (props) => {
   return (
     <Fragment>
       <section className="itemList__container">
-        <ListControls
-          version={props.version}
-          total={props.totalAmount}
-          openForm={props.clickedOpened}
-        />
+        <ListControls version={props.version} total={props.totalAmount} />
         <section className="itemList__tags">
           <span>Id</span>
           <span>Nombre</span>
@@ -55,4 +55,4 @@ const itemsList = (props) => {
   );
 };
 
-export default itemsList;
+export default ItemsList;

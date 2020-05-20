@@ -8,6 +8,7 @@ import thunk from "redux-thunk";
 import App from "./App";
 import incomeReducer from "./store/reducers/income";
 import expenseReducer from "./store/reducers/expense";
+import modalReducer from "./store/reducers/modal";
 
 const composeEnhancers =
   process.env.NODE_ENV === "development"
@@ -17,6 +18,7 @@ const composeEnhancers =
 const rootReducer = combineReducers({
   income: incomeReducer,
   expense: expenseReducer,
+  modal: modalReducer,
 });
 
 const store = createStore(

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import "./NewItemForm.css";
+import { updateObject, checkValidity } from "../../shared/utility";
+import * as actions from "../../store/actions";
 
 import Button from "../UI/Button/Button";
 import Input from "../UI/Input/Input";
@@ -8,7 +11,7 @@ import Input from "../UI/Input/Input";
 class NewItemForm extends Component {
   state = {
     newItemForm: {
-      name: {
+      itemName: {
         elementType: "input",
         elementConfig: {
           type: "text",
@@ -21,13 +24,28 @@ class NewItemForm extends Component {
         valid: false,
         touched: false,
       },
+      category: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            { value: "Comida", displayValue: "Comida" },
+            { value: "Salud", displayValue: "Salud" },
+            { value: "Servicios", displayValue: "Servicios" },
+            { value: "Transporte", displayValue: "Transporte" },
+            { value: "Otro", displayValue: "Otro" },
+          ],
+        },
+        value: "Comida",
+        validation: {},
+        valid: true,
+      },
       amount: {
         elementType: "input",
         elementConfig: {
           type: "number",
           placeholder: "Monto",
         },
-        value: null,
+        value: "",
         validation: {
           required: true,
         },
@@ -60,95 +78,120 @@ class NewItemForm extends Component {
         valid: false,
         touched: false,
       },
-
-      category: {
-        elementType: "select",
-        elementConfig: {
-          options: [
-            { value: "Comida", displayValue: "Comida" },
-            { value: "Salud", displayValue: "Salud" },
-            { value: "Servicios", displayValue: "Servicios" },
-            { value: "Transporte", displayValue: "Transporte" },
-            { value: "Otro", displayValue: "Otro" },
-          ],
-        },
-        value: "",
-        validation: {},
-        valid: true,
-      },
     },
+    formIsValid: false,
+    show: false,
+  };
+
+  addItemHandler = (e) => {
+    e.preventDefault();
+
+    let updatedForm = {};
+
+    for (let key in this.state.newItemForm) {
+      updatedForm[key] = this.state.newItemForm[key].value;
+    }
+
+    console.log(updatedForm);
+    this.props.incomeVersion
+      ? this.props.addToIncome(updatedForm)
+      : this.props.addToExpense(updatedForm);
+
+    this.props.toggleModal();
+
+    console.log("item added");
+  };
+
+  inputChangedHandler = (e, identifier) => {
+    const updatedFormElement = updateObject(
+      this.state.newItemForm[identifier],
+      {
+        value: e.target.value,
+        valid: checkValidity(
+          e.target.value,
+          this.state.newItemForm[identifier].validation
+        ),
+        touched: true,
+      }
+    );
+
+    const updatedNewItemForm = updateObject(this.state.newItemForm, {
+      [identifier]: updatedFormElement,
+    });
+
+    let formIsValid = true;
+
+    for (let identifier in updatedNewItemForm) {
+      formIsValid = updatedNewItemForm[identifier].valid && formIsValid;
+    }
+
+    this.setState({
+      newItemForm: updatedNewItemForm,
+      formIsValid: formIsValid,
+    });
   };
 
   render() {
-    let form: null;
-    return <form className="newExpense_form"></form>;
+    const formElementsArray = [];
+
+    for (let key in this.state.newItemForm) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.newItemForm[key],
+      });
+    }
+
+    let form = (
+      <form className="newExpense__form" onSubmit={this.addItemHandler}>
+        {formElementsArray.map((formElement) => {
+          if (this.props.incomeVersion && formElement.id === "category") {
+            return null;
+          } else {
+            return (
+              <Input
+                key={formElement.id}
+                elementType={formElement.config.elementType}
+                elementConfig={formElement.config.elementConfig}
+                changed={(e) => this.inputChangedHandler(e, formElement.id)}
+                value={formElement.config.value}
+              />
+            );
+          }
+        })}
+        <div className="newExpense__btnWrapper">
+          <Button color="white" btnType="add" clicked={this.addItemHandler}>
+            Guardar
+          </Button>
+          <Button
+            color="white"
+            btnType="cancel"
+            type="button"
+            clicked={this.props.toggleModal}
+          >
+            Cancelar
+          </Button>
+        </div>
+      </form>
+    );
+    return form;
   }
 }
 
-// const options = props.options.map((option, i) => {
-//   return (
-//     <option key={option + i} value={option}>
-//       {option}
-//     </option>
-//   );
-// });
+const mapStateToProps = (state) => {
+  return {
+    incomeData: state.income.data,
+    expenseData: state.expense.data,
+  };
+};
 
-//   return (
-//     <form action="" className="newExpense__form">
-//       <input
-//         name="itemName"
-//         type="text"
-//         placeholder="Nombre"
-//         value={props.values.itemName}
-//         onChange={props.changed}
-//         />
-//         {props.incomeVersion ? null : (
-//         <select
-//         name="category"
-//         value={props.values.category}
-//           ref={props.reference}
-//           onChange={props.changed}
-//         >
-//         <option value="" hidden disabled>
-//         --categoría--
-//         </option>
-//         {options}
-//         </select>
-//       )}
-//       <input
-//       name="amount"
-//       type="number"
-//         placeholder="Monto"
-//         value={props.values.amount}
-//         onChange={props.changed}
-//       />
-//       <input
-//         name="date"
-//         type="date"
-//         placeholder="Fecha"
-//         value={props.values.date}
-//         onChange={props.changed}
-//         />
-//         <textarea
-//         name="description"
-//         type="text"
-//         placeholder="Descripción (opcional)"
-//         value={props.values.description}
-//         onChange={props.changed}
-//       />
-//       {!props.formValidated ? (
-//         <p className="newExpense__formValidation">Hay campos vacios</p>
-//         ) : null}
-//         <div className="newExpense__btnWrapper">
-//           <Button color="white" btnType="add" clicked={props.clicked}>
-//             Guardar
-//           </Button>
-//           <Button color="white" btnType="cancel" clicked={props.clickClosed}>
-//             Cancelar
-//           </Button>
-//         </div>
-//     </form>
-//     );
-// };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToIncome: (itemData) => dispatch(actions.addToIncome(itemData)),
+    removeFromIncome: (index) => dispatch(actions.removeFromIncome(index)),
+    addToExpense: (itemData) => dispatch(actions.addToExpense(itemData)),
+    removeFromExpense: (index) => dispatch(actions.removeFromExpense(index)),
+    toggleModal: () => dispatch(actions.toggleModal()),
+  };
+};
 
-export default NewItemForm;
+export default connect(mapStateToProps, mapDispatchToProps)(NewItemForm);

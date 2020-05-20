@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   data: [],
 };
 
-const managerReducer = (state = INITIAL_STATE, action) => {
+const expenseReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionTypes.ADD_ITEM_TO_EXPENSE:
       return updateObject(state, {
@@ -23,4 +23,4 @@ const managerReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default managerReducer;
+export default expenseReducer;

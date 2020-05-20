@@ -1,6 +1,9 @@
 import React from "react";
 
 import "./ListControls.css";
+import { connect } from "react-redux";
+
+import * as actions from "../../store/actions";
 
 import Button from "../UI/Button/Button";
 
@@ -11,7 +14,7 @@ const listControls = (props) => (
       fontSize=".9rem"
       btnType="add"
       color="white"
-      clicked={props.openForm}
+      clicked={props.toggleModal}
     >
       Nuevo
     </Button>
@@ -27,4 +30,10 @@ const listControls = (props) => (
   </div>
 );
 
-export default listControls;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleModal: () => dispatch(actions.toggleModal()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(listControls);

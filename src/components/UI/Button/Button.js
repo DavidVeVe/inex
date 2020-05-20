@@ -7,6 +7,7 @@ const button = (props) => (
     onClick={props.clicked}
     style={{ width: props.width, fontSize: props.fontSize, color: props.color }}
     className={["btn", props.btnType].join(" ")}
+    type={props.type}
   >
     {props.children}
   </button>
