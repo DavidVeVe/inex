@@ -17,77 +17,12 @@ const categories = ["Comida", "Salud", "Servicios", "Transporte", "Otro"];
 class ItemsManager extends Component {
   state = {
     editable: false,
-    formValidation: true,
     deleteItemName: "",
     uxDescription: "",
     showDescription: false,
     showDeletePopup: false,
     selectedItemIndex: null,
   };
-
-  // itemAdder = (e) => {
-  //   e.preventDefault();
-
-  //   this.props.incomeVersion
-  //     ? this.props.addToIncome(this.state.incomeForm)
-  //     : this.props.addToExpense(this.state.expenseForm);
-
-  //   this.setState({ show: false });
-
-  // if (
-  //   (this.state.incomeForm.itemName.length !== 0 &&
-  //     this.state.incomeForm.date.length !== 0 &&
-  //     this.state.incomeForm.amount.length !== 0) ||
-  //   (this.state.expenseForm.itemName.length !== 0 &&
-  //     this.state.expenseForm.category.length !== 0 &&
-  //     this.state.expenseForm.date.length !== 0 &&
-  //     this.state.expenseForm.amount.length !== 0)
-  // ) {
-  //   this.setState((prevState) => {
-  //     const incomeData = [...prevState.data.income];
-  //     const expenseData = [...prevState.data.expense];
-
-  //     if (this.props.incomeVersion && this.state.editable) {
-  //       incomeData[this.state.selectedItemIndex] = this.state.incomeForm;
-  //     } else if (this.props.incomeVersion) {
-  //       incomeData.push(this.state.incomeForm);
-  //     } else if (!this.props.incomeVersion && this.state.editable) {
-  //       expenseData[this.state.selectedItemIndex] = this.state.expenseForm;
-  //     } else {
-  //       expenseData.push(this.state.expenseForm);
-  //     }
-
-  //     return {
-  //       data: {
-  //         income: incomeData,
-  //         expense: expenseData,
-  //       },
-  //       incomeForm: {
-  //         itemName: "",
-  //         amount: "",
-  //         date: "",
-  //         description: "",
-  //       },
-  //       expenseForm: {
-  //         itemName: "",
-  //         amount: "",
-  //         date: "",
-  //         category: "",
-  //         description: "",
-  //       },
-  //       formValidation: true,
-  //       show: false,
-  //     };
-  //   });
-  // } else {
-  //   this.setState((prevState) => {
-  //     return {
-  //       show: prevState.show,
-  //       formValidation: false,
-  //     };
-  //   });
-  // }
-  // };
 
   // itemChanged = ({ target }) => {
   //   if (this.props.incomeVersion) {
@@ -117,99 +52,6 @@ class ItemsManager extends Component {
       : this.props.removeFromExpense(index);
 
     this.setState({ showDeletePopup: false });
-
-    // this.setState((prevState) => {
-    //   const incomeData = [...prevState.data.income];
-    //   const expenseData = [...prevState.data.expense];
-    //   if (this.props.incomeVersion) {
-    //     incomeData.splice(index, 1);
-    //   } else {
-    //     expenseData.splice(index, 1);
-    //   }
-
-    //   return {
-    //     data: {
-    //       income: incomeData,
-    //       expense: expenseData,
-    //     },
-    //     incomeForm: {
-    //       itemName: "",
-    //       amount: "",
-    //       date: "",
-    //       description: "",
-    //     },
-    //     expenseForm: {
-    //       itemName: "",
-    //       amount: "",
-    //       date: "",
-    //       category: "",
-    //       description: "",
-    //     },
-    //     showDeletePopup: false,
-    //   };
-    // });
-  };
-
-  // itemEdited = (index, e) => {
-  //   e.stopPropagation();
-
-  //   const incomeData = [...this.props.incomeData];
-  //   const expenseData = [...this.props.expenseData];
-
-  //   this.setState((prevState) => {
-  //     if (this.props.incomeVersion) {
-  //       return {
-  //         incomeForm: {
-  //           itemName: incomeData[index].itemName,
-  //           amount: incomeData[index].amount,
-  //           date: incomeData[index].date,
-  //           description: incomeData[index].description,
-  //         },
-  //         editable: true,
-  //         show: true,
-  //         selectedItemIndex: index,
-  //       };
-  //     } else {
-  //       return {
-  //         expenseForm: {
-  //           itemName: expenseData[index].itemName,
-  //           amount: expenseData[index].amount,
-  //           date: expenseData[index].date,
-  //           category: expenseData[index].category,
-  //           description: expenseData[index].description,
-  //         },
-  //         editable: true,
-  //         show: true,
-  //         selectedItemIndex: index,
-  //       };
-  //     }
-  //   });
-  // };
-
-  modalToggleHandler = (e) => {
-    e.preventDefault();
-
-    const modal = this.state.show;
-
-    this.setState({
-      show: !modal,
-      incomeForm: {
-        itemName: "",
-        amount: "",
-        date: "",
-        description: "",
-      },
-      expenseForm: {
-        itemName: "",
-        amount: "",
-        date: "",
-        category: "",
-        description: "",
-      },
-      editable: false,
-      formValidation: true,
-      selectedItemIndex: null,
-    });
   };
 
   toggleDeletePopup = (index, e) => {
@@ -247,7 +89,7 @@ class ItemsManager extends Component {
   };
 
   render() {
-    console.log(this.props.showModal);
+    console.log(this.props.showDescription);
     const uxDescription = this.state.uxDescription;
     const deleteItemName = this.state.deleteItemName;
 
@@ -275,11 +117,11 @@ class ItemsManager extends Component {
           </Modal>
         ) : (
           <Modal
-            show={this.state.showDescription}
-            clickClosed={this.descriptionToggleHandler}
+            show={this.props.showDescription}
+            clickClosed={this.props.toggleModalDescription}
           >
             <Description
-              descriptionToggle={this.descriptionToggleHandler}
+              descriptionToggle={this.props.toggleModalDescription}
               descriptionValues={uxDescription ? uxDescription : {}}
             />
           </Modal>
@@ -297,7 +139,7 @@ class ItemsManager extends Component {
         )}
         <ItemsList
           // totalAmount={total}
-          descriptionToggle={this.descriptionToggleHandler}
+          descriptionToggle={this.props.toggleModalDescription}
           itemsValues={
             this.props.incomeVersion
               ? this.props.incomeData
@@ -318,6 +160,7 @@ const mapStateToProps = (state) => {
     incomeData: state.income.data,
     expenseData: state.expense.data,
     showModal: state.modal.showForm,
+    showDescription: state.modal.showDescription,
   };
 };
 
@@ -326,6 +169,7 @@ const mapDispatchToProps = (dispatch) => {
     removeFromIncome: (index) => dispatch(actions.removeFromIncome(index)),
     removeFromExpense: (index) => dispatch(actions.removeFromExpense(index)),
     toggleModalForm: () => dispatch(actions.toggleModalForm()),
+    toggleModalDescription: () => dispatch(actions.toggleModalDescription()),
   };
 };
 
