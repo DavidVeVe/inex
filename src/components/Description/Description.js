@@ -1,13 +1,10 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 
 import "./Description.css";
 
 import Button from "../UI/Button/Button";
 
 const Description = (props) => {
-  useEffect(() => {
-    console.log(props.descriptionValues);
-  });
   return (
     <div className="description__container">
       {props.descriptionValues.description ? (

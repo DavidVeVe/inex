@@ -5,7 +5,7 @@ import "./Manager.css";
 
 import * as actions from "../../store/actions";
 
-import NewItemForm from "../../components/NewItemForm/NewItemForm";
+import NewItemForm from "../NewItemForm/NewItemForm";
 import ItemsList from "../../components/ItemsList/ItemsList";
 import Description from "../../components/Description/Description";
 import Modal from "../../components/UI/Modal/Modal";
@@ -89,8 +89,7 @@ class ItemsManager extends Component {
               addItem={this.addItemHandler}
             />
           </Modal>
-        ) : null}
-        {this.props.showDescription ? (
+        ) : (
           <Modal
             show={this.props.showDescription}
             clickClosed={this.props.toggleModalDescription}
@@ -100,7 +99,7 @@ class ItemsManager extends Component {
               descriptionValues={uxDescription ? uxDescription : {}}
             />
           </Modal>
-        ) : null}
+        )}
         <img
           className="menuIcon"
           onClick={this.props.menuClicked}

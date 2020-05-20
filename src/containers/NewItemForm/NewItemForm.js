@@ -5,8 +5,8 @@ import "./NewItemForm.css";
 import { updateObject, checkValidity } from "../../shared/utility";
 import * as actions from "../../store/actions";
 
-import Button from "../UI/Button/Button";
-import Input from "../UI/Input/Input";
+import Button from "../../components/UI/Button/Button";
+import Input from "../../components/UI/Input/Input";
 
 class NewItemForm extends Component {
   state = {

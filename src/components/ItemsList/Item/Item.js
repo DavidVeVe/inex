@@ -1,8 +1,8 @@
 import React from "react";
 
 import "./Item.css";
-import deleteIcon from "../../assets/icons/delete.png";
-import editIcon from "../../assets/icons/edit2.png";
+import deleteIcon from "../../../assets/icons/delete.png";
+import editIcon from "../../../assets/icons/edit2.png";
 
 const item = (props) => {
   return (
