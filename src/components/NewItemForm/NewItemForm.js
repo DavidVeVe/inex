@@ -99,10 +99,7 @@ class NewItemForm extends Component {
       this.props.addToExpense(updatedForm);
     }
 
-    console.log(updatedForm);
     this.props.toggleModalForm();
-
-    console.log("item added");
   };
 
   inputChangedHandler = (e, identifier) => {

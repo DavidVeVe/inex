@@ -12,14 +12,11 @@ import Modal from "../../components/UI/Modal/Modal";
 import DeletePopup from "../../components/DeletePopup/DeletePopup";
 import menuIcon from "../../assets/icons/menu.png";
 
-const categories = ["Comida", "Salud", "Servicios", "Transporte", "Otro"];
-
 class ItemsManager extends Component {
   state = {
     editable: false,
     deleteItemName: "",
     uxDescription: "",
-    showDeletePopup: false,
     selectedItemIndex: null,
   };
 
@@ -30,7 +27,7 @@ class ItemsManager extends Component {
       ? this.props.removeFromIncome(index)
       : this.props.removeFromExpense(index);
 
-    this.setState({ showDeletePopup: false });
+    this.props.toggleModalDeletePopup();
   };
 
   toggleDeletePopup = (index, e) => {
@@ -49,7 +46,7 @@ class ItemsManager extends Component {
       deleteItemName: itemName,
     });
 
-    this.props.toggleDeletePopup();
+    this.props.toggleModalDeletePopup();
   };
 
   descriptionToggleHandler = (index) => {
@@ -70,7 +67,6 @@ class ItemsManager extends Component {
   };
 
   render() {
-    console.log(this.props.showDescription);
     const uxDescription = this.state.uxDescription;
     const deleteItemName = this.state.deleteItemName;
 
@@ -83,20 +79,18 @@ class ItemsManager extends Component {
           itemIndex={this.state.selectedItemIndex}
           name={deleteItemName ? deleteItemName : {}}
         />
-        {this.props.showModal ? (
+        {this.props.showForm ? (
           <Modal
-            show={this.props.showModal}
+            show={this.props.showForm}
             clickClosed={this.props.toggleModalForm}
           >
             <NewItemForm
               incomeVersion={this.props.incomeVersion}
-              // clickClosed={this.modalToggleHandler}
               addItem={this.addItemHandler}
-              changed={this.itemChanged}
-              options={categories}
             />
           </Modal>
-        ) : (
+        ) : null}
+        {this.props.showDescription ? (
           <Modal
             show={this.props.showDescription}
             clickClosed={this.props.toggleModalDescription}
@@ -106,12 +100,12 @@ class ItemsManager extends Component {
               descriptionValues={uxDescription ? uxDescription : {}}
             />
           </Modal>
-        )}
+        ) : null}
         <img
           className="menuIcon"
           onClick={this.props.menuClicked}
           src={menuIcon}
-          alt=""
+          alt="menu icon"
         />
         {this.props.incomeVersion ? (
           <h1>Gestor de ingresos</h1>
@@ -121,11 +115,6 @@ class ItemsManager extends Component {
         <ItemsList
           // totalAmount={total}
           descriptionToggle={this.descriptionToggleHandler}
-          itemsValues={
-            this.props.incomeVersion
-              ? this.props.incomeData
-              : this.props.expenseData
-          }
           version={this.props.incomeVersion}
           clickedEdited={this.itemEdited}
           itemDeleted={this.itemDeleted}
@@ -140,8 +129,9 @@ const mapStateToProps = (state) => {
   return {
     incomeData: state.income.data,
     expenseData: state.expense.data,
-    showModal: state.modal.showForm,
+    showForm: state.modal.showForm,
     showDescription: state.modal.showDescription,
+    showDeletePopup: state.modal.showDeletePopup,
   };
 };
 
@@ -151,6 +141,7 @@ const mapDispatchToProps = (dispatch) => {
     removeFromExpense: (index) => dispatch(actions.removeFromExpense(index)),
     toggleModalForm: () => dispatch(actions.toggleModalForm()),
     toggleModalDescription: () => dispatch(actions.toggleModalDescription()),
+    toggleModalDeletePopup: () => dispatch(actions.toggleModalDeletePopup()),
   };
 };
 
