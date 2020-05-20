@@ -14,7 +14,7 @@ const listControls = (props) => (
       fontSize=".9rem"
       btnType="add"
       color="white"
-      clicked={props.toggleModal}
+      clicked={props.toggleModalForm}
     >
       Nuevo
     </Button>
@@ -32,7 +32,7 @@ const listControls = (props) => (
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleModal: () => dispatch(actions.toggleModal()),
+    toggleModalForm: () => dispatch(actions.toggleModalForm()),
   };
 };
 

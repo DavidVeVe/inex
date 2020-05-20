@@ -263,7 +263,7 @@ class ItemsManager extends Component {
         {this.props.showModal ? (
           <Modal
             show={this.props.showModal}
-            clickClosed={this.props.toggleModal}
+            clickClosed={this.props.toggleModalForm}
           >
             <NewItemForm
               incomeVersion={this.props.incomeVersion}
@@ -317,7 +317,7 @@ const mapStateToProps = (state) => {
   return {
     incomeData: state.income.data,
     expenseData: state.expense.data,
-    showModal: state.modal.show,
+    showModal: state.modal.showForm,
   };
 };
 
@@ -325,7 +325,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     removeFromIncome: (index) => dispatch(actions.removeFromIncome(index)),
     removeFromExpense: (index) => dispatch(actions.removeFromExpense(index)),
-    toggleModal: () => dispatch(actions.toggleModal()),
+    toggleModalForm: () => dispatch(actions.toggleModalForm()),
   };
 };
 

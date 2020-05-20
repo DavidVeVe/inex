@@ -97,7 +97,7 @@ class NewItemForm extends Component {
       ? this.props.addToIncome(updatedForm)
       : this.props.addToExpense(updatedForm);
 
-    this.props.toggleModal();
+    this.props.toggleModalForm();
 
     console.log("item added");
   };
@@ -166,7 +166,7 @@ class NewItemForm extends Component {
             color="white"
             btnType="cancel"
             type="button"
-            clicked={this.props.toggleModal}
+            clicked={this.props.toggleModalForm}
           >
             Cancelar
           </Button>
@@ -190,7 +190,7 @@ const mapDispatchToProps = (dispatch) => {
     removeFromIncome: (index) => dispatch(actions.removeFromIncome(index)),
     addToExpense: (itemData) => dispatch(actions.addToExpense(itemData)),
     removeFromExpense: (index) => dispatch(actions.removeFromExpense(index)),
-    toggleModal: () => dispatch(actions.toggleModal()),
+    toggleModalForm: () => dispatch(actions.toggleModalForm()),
   };
 };
 
