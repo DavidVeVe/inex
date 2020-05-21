@@ -1,5 +1,11 @@
 import * as actionTypes from "./actionTypes";
 
+export const toggleModalForm = () => {
+  return {
+    type: actionTypes.TOGGLE_MODAL_FORM,
+  };
+};
+
 export const inputFormChanged = (event, identifier) => {
   return {
     type: actionTypes.FORM_INPUT_CHANGED,

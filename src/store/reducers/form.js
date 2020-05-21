@@ -81,6 +81,7 @@ const INITIAL_STATE = {
   editing: false,
   itemIndex: null,
   formIsValid: false,
+  showForm: false,
 };
 
 const inputChanged = (state, action) => {
@@ -186,7 +187,7 @@ const removeFromExpense = (state, action) => {
   });
 };
 
-const editItem = (state, action) => {
+export const editItem = (state, action) => {
   action.payload.event.stopPropagation();
 
   let editableForm = {};
@@ -198,9 +199,19 @@ const editItem = (state, action) => {
   }
 
   return updateObject(state, {
+    showForm: !state.showForm,
     form: editableForm,
     editing: true,
     itemIndex: action.payload.index,
+  });
+};
+
+export const toggleModalForm = (state, action) => {
+  const newForm = clearForm(state.form, updateObject);
+
+  return updateObject(state, {
+    showForm: !state.showForm,
+    form: newForm,
   });
 };
 
@@ -208,6 +219,8 @@ const formReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionTypes.FORM_RENDER:
       return { ...state };
+    case actionTypes.TOGGLE_MODAL_FORM:
+      return toggleModalForm(state, action);
     case actionTypes.FORM_INPUT_CHANGED:
       return inputChanged(state, action);
     case actionTypes.ADD_ITEM_TO_INCOME:

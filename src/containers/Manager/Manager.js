@@ -37,36 +37,8 @@ class ItemsManager extends Component {
     this.props.incomeVersion
       ? this.props.editItem(index, e, incomeData)
       : this.props.editItem(index, e, expenseData);
-    this.props.toggleModalEditForm();
 
-    // this.setState((prevState) => {
-    //   if (this.props.incomeVersion) {
-    //     return {
-    //       incomeForm: {
-    //         itemName: incomeData[index].itemName,
-    //         amount: incomeData[index].amount,
-    //         date: incomeData[index].date,
-    //         description: incomeData[index].description,
-    //       },
-    //       editable: true,
-    //       show: true,
-    //       selectedItemIndex: index,
-    //     };
-    //   } else {
-    //     return {
-    //       expenseForm: {
-    //         itemName: expenseData[index].itemName,
-    //         amount: expenseData[index].amount,
-    //         date: expenseData[index].date,
-    //         category: expenseData[index].category,
-    //         description: expenseData[index].description,
-    //       },
-    //       editable: true,
-    //       show: true,
-    //       selectedItemIndex: index,
-    //     };
-    //   }
-    // });
+    // this.props.toggleModalForm();
   };
 
   toggleDeletePopup = (index, e) => {
@@ -167,7 +139,7 @@ const mapStateToProps = (state) => {
   return {
     incomeData: state.form.incomeData,
     expenseData: state.form.expenseData,
-    showForm: state.modal.showForm,
+    showForm: state.form.showForm,
     showDescription: state.modal.showDescription,
     showDeletePopup: state.modal.showDeletePopup,
     form: state.form.form,
@@ -181,7 +153,6 @@ const mapDispatchToProps = (dispatch) => {
     toggleModalForm: () => dispatch(actions.toggleModalForm()),
     toggleModalDescription: () => dispatch(actions.toggleModalDescription()),
     toggleModalDeletePopup: () => dispatch(actions.toggleModalDeletePopup()),
-    toggleModalEditForm: () => dispatch(actions.toggleModalEditForm()),
     editItem: (index, event, data) =>
       dispatch(actions.editItem(index, event, data)),
   };
