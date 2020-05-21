@@ -3,9 +3,9 @@ import React from "react";
 import "./ListControls.css";
 import { connect } from "react-redux";
 
-import * as actions from "../../store/actions";
+import * as actions from "../../../store/actions";
 
-import Button from "../UI/Button/Button";
+import Button from "../../UI/Button/Button";
 
 const listControls = (props) => (
   <div className="listControls__container">

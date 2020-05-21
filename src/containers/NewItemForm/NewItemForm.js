@@ -2,94 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import "./NewItemForm.css";
-import { updateObject, checkValidity } from "../../shared/utility";
 import * as actions from "../../store/actions";
 
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 
 class NewItemForm extends Component {
-  state = {
-    newItemForm: {
-      itemName: {
-        elementType: "input",
-        elementConfig: {
-          type: "text",
-          placeholder: "Nombre",
-        },
-        value: "",
-        validation: {
-          required: true,
-        },
-        valid: false,
-        touched: false,
-      },
-      category: {
-        elementType: "select",
-        elementConfig: {
-          options: [
-            { value: "Comida", displayValue: "Comida" },
-            { value: "Salud", displayValue: "Salud" },
-            { value: "Servicios", displayValue: "Servicios" },
-            { value: "Transporte", displayValue: "Transporte" },
-            { value: "Otro", displayValue: "Otro" },
-          ],
-        },
-        value: "Comida",
-        validation: {},
-        valid: true,
-      },
-      amount: {
-        elementType: "input",
-        elementConfig: {
-          type: "number",
-          placeholder: "Monto",
-        },
-        value: "",
-        validation: {
-          required: true,
-        },
-        valid: false,
-        touched: false,
-      },
-      date: {
-        elementType: "input",
-        elementConfig: {
-          type: "date",
-          placeholder: "Fecha",
-        },
-        value: "",
-        validation: {
-          required: true,
-        },
-        valid: false,
-        touched: false,
-      },
-      description: {
-        elementType: "textarea",
-        elementConfig: {
-          type: "text",
-          placeholder: "Descripción",
-        },
-        value: "",
-        validation: {
-          required: true,
-        },
-        valid: false,
-        touched: false,
-      },
-    },
-    formIsValid: false,
-    show: false,
-  };
-
   addItemHandler = (e) => {
     e.preventDefault();
 
     let updatedForm = {};
 
-    for (let key in this.state.newItemForm) {
-      updatedForm[key] = this.state.newItemForm[key].value;
+    for (let key in this.props.form) {
+      updatedForm[key] = this.props.form[key].value;
     }
 
     if (this.props.incomeVersion) {
@@ -102,42 +27,13 @@ class NewItemForm extends Component {
     this.props.toggleModalForm();
   };
 
-  inputChangedHandler = (e, identifier) => {
-    const updatedFormElement = updateObject(
-      this.state.newItemForm[identifier],
-      {
-        value: e.target.value,
-        valid: checkValidity(
-          e.target.value,
-          this.state.newItemForm[identifier].validation
-        ),
-        touched: true,
-      }
-    );
-
-    const updatedNewItemForm = updateObject(this.state.newItemForm, {
-      [identifier]: updatedFormElement,
-    });
-
-    let formIsValid = true;
-
-    for (let identifier in updatedNewItemForm) {
-      formIsValid = updatedNewItemForm[identifier].valid && formIsValid;
-    }
-
-    this.setState({
-      newItemForm: updatedNewItemForm,
-      formIsValid: formIsValid,
-    });
-  };
-
   render() {
     const formElementsArray = [];
 
-    for (let key in this.state.newItemForm) {
+    for (let key in this.props.form) {
       formElementsArray.push({
         id: key,
-        config: this.state.newItemForm[key],
+        config: this.props.form[key],
       });
     }
 
@@ -152,7 +48,7 @@ class NewItemForm extends Component {
                 key={formElement.id}
                 elementType={formElement.config.elementType}
                 elementConfig={formElement.config.elementConfig}
-                changed={(e) => this.inputChangedHandler(e, formElement.id)}
+                changed={(e) => this.props.inputFormChanged(e, formElement.id)}
                 value={formElement.config.value}
               />
             );
@@ -181,6 +77,7 @@ const mapStateToProps = (state) => {
   return {
     incomeData: state.income.data,
     expenseData: state.expense.data,
+    form: state.form.form,
   };
 };
 
@@ -191,6 +88,8 @@ const mapDispatchToProps = (dispatch) => {
     addToExpense: (itemData) => dispatch(actions.addToExpense(itemData)),
     removeFromExpense: (index) => dispatch(actions.removeFromExpense(index)),
     toggleModalForm: () => dispatch(actions.toggleModalForm()),
+    inputFormChanged: (e, identifier) =>
+      dispatch(actions.inputFormChanged(e, identifier)),
   };
 };
 

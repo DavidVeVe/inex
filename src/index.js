@@ -9,6 +9,7 @@ import App from "./App";
 import incomeReducer from "./store/reducers/income";
 import expenseReducer from "./store/reducers/expense";
 import modalReducer from "./store/reducers/modal";
+import formReducer from "./store/reducers/form";
 
 const composeEnhancers =
   process.env.NODE_ENV === "development"
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   income: incomeReducer,
   expense: expenseReducer,
   modal: modalReducer,
+  form: formReducer,
 });
 
 const store = createStore(

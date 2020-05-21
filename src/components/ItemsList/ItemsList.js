@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import "./ItemsList.css";
 
-import ListControls from "../ListControls/ListControls";
+import ListControls from "./ListControls/ListControls";
 import Item from "./Item/Item";
 
 const ItemsList = (props) => {

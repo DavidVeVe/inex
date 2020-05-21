@@ -14,6 +14,8 @@ const modalReducer = (state = INITIAL_STATE, action) => {
       return { ...state, showDescription: !state.showDescription };
     case actionTypes.TOGGLE_MODAL_DELETE_POPUP:
       return { ...state, showDeletePopup: !state.showDeletePopup };
+    case actionTypes.TOGGLE_MODAL_EDIT_FORM:
+      return { ...state, showForm: !state.showForm };
     default:
       return state;
   }

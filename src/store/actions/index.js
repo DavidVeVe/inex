@@ -4,4 +4,6 @@ export {
   toggleModalForm,
   toggleModalDescription,
   toggleModalDeletePopup,
+  toggleModalEditForm,
 } from "./modal";
+export { inputFormChanged } from "./form";

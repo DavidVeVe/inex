@@ -17,3 +17,9 @@ export const toggleModalDeletePopup = () => {
     type: actionTypes.TOGGLE_MODAL_DELETE_POPUP,
   };
 };
+
+export const toggleModalEditForm = () => {
+  return {
+    type: actionTypes.TOGGLE_MODAL_EDIT_FORM,
+  };
+};

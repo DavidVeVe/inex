@@ -11,6 +11,7 @@ import Description from "../../components/Description/Description";
 import Modal from "../../components/UI/Modal/Modal";
 import DeletePopup from "../../components/DeletePopup/DeletePopup";
 import menuIcon from "../../assets/icons/menu.png";
+import { updateObject } from "../../shared/utility";
 
 class ItemsManager extends Component {
   state = {
@@ -28,6 +29,47 @@ class ItemsManager extends Component {
       : this.props.removeFromExpense(index);
 
     this.props.toggleModalDeletePopup();
+  };
+
+  itemEdited = (index, e) => {
+    e.stopPropagation();
+
+    const incomeData = updateObject(this.props.incomeData);
+    const expenseData = this.props.expenseData;
+
+    console.log("Edit button clicked - incomeData:", incomeData);
+    console.log("Edit button clicked - expenseData:", expenseData);
+
+    this.props.toggleModalEditForm();
+
+    // this.setState((prevState) => {
+    //   if (this.props.incomeVersion) {
+    //     return {
+    //       incomeForm: {
+    //         itemName: incomeData[index].itemName,
+    //         amount: incomeData[index].amount,
+    //         date: incomeData[index].date,
+    //         description: incomeData[index].description,
+    //       },
+    //       editable: true,
+    //       show: true,
+    //       selectedItemIndex: index,
+    //     };
+    //   } else {
+    //     return {
+    //       expenseForm: {
+    //         itemName: expenseData[index].itemName,
+    //         amount: expenseData[index].amount,
+    //         date: expenseData[index].date,
+    //         category: expenseData[index].category,
+    //         description: expenseData[index].description,
+    //       },
+    //       editable: true,
+    //       show: true,
+    //       selectedItemIndex: index,
+    //     };
+    //   }
+    // });
   };
 
   toggleDeletePopup = (index, e) => {
@@ -131,6 +173,7 @@ const mapStateToProps = (state) => {
     showForm: state.modal.showForm,
     showDescription: state.modal.showDescription,
     showDeletePopup: state.modal.showDeletePopup,
+    form: state.form.form,
   };
 };
 
@@ -141,6 +184,7 @@ const mapDispatchToProps = (dispatch) => {
     toggleModalForm: () => dispatch(actions.toggleModalForm()),
     toggleModalDescription: () => dispatch(actions.toggleModalDescription()),
     toggleModalDeletePopup: () => dispatch(actions.toggleModalDeletePopup()),
+    toggleModalEditForm: () => dispatch(actions.toggleModalEditForm()),
   };
 };
 
