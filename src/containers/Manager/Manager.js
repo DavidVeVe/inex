@@ -168,8 +168,8 @@ class ItemsManager extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    incomeData: state.income.data,
-    expenseData: state.expense.data,
+    incomeData: state.form.incomeData,
+    expenseData: state.form.expenseData,
     showForm: state.modal.showForm,
     showDescription: state.modal.showDescription,
     showDeletePopup: state.modal.showDeletePopup,

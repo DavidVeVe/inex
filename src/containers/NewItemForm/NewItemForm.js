@@ -9,19 +9,10 @@ import Input from "../../components/UI/Input/Input";
 
 class NewItemForm extends Component {
   addItemHandler = (e) => {
-    e.preventDefault();
-
-    let updatedForm = {};
-
-    for (let key in this.props.form) {
-      updatedForm[key] = this.props.form[key].value;
-    }
-
     if (this.props.incomeVersion) {
-      delete updatedForm.category;
-      this.props.addToIncome(updatedForm);
+      this.props.addToIncome(e, this.props.form);
     } else {
-      this.props.addToExpense(updatedForm);
+      this.props.addToExpense(e, this.props.form);
     }
 
     this.props.toggleModalForm();
@@ -75,17 +66,17 @@ class NewItemForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    incomeData: state.income.data,
-    expenseData: state.expense.data,
+    incomeData: state.form.incomeData,
+    expenseData: state.form.expenseData,
     form: state.form.form,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToIncome: (itemData) => dispatch(actions.addToIncome(itemData)),
+    addToIncome: (e, itemData) => dispatch(actions.addToIncome(e, itemData)),
     removeFromIncome: (index) => dispatch(actions.removeFromIncome(index)),
-    addToExpense: (itemData) => dispatch(actions.addToExpense(itemData)),
+    addToExpense: (e, itemData) => dispatch(actions.addToExpense(e, itemData)),
     removeFromExpense: (index) => dispatch(actions.removeFromExpense(index)),
     toggleModalForm: () => dispatch(actions.toggleModalForm()),
     inputFormChanged: (e, identifier) =>

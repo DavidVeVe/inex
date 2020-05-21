@@ -60,8 +60,8 @@ const ItemsList = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    incomeData: state.income.data,
-    expenseData: state.expense.data,
+    incomeData: state.form.incomeData,
+    expenseData: state.form.expenseData,
   };
 };
 

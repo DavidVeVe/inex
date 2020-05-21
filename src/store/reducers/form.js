@@ -1,9 +1,14 @@
 import * as actionTypes from "../actions/actionTypes";
-import { updateObject, checkValidity } from "../../shared/utility";
+import {
+  updateObject,
+  checkValidity,
+  clearForm,
+  getFormData,
+} from "../../shared/utility";
 
 const INITIAL_STATE = {
-  incomedata: [],
-  expensedata: [],
+  incomeData: [],
+  expenseData: [],
   form: {
     itemName: {
       elementType: "input",
@@ -78,6 +83,7 @@ const INITIAL_STATE = {
 
 const inputChanged = (state, action) => {
   action.payload.event.preventDefault();
+
   const updatedFormElement = updateObject(
     state.form[action.payload.identifier],
     {
@@ -94,8 +100,6 @@ const inputChanged = (state, action) => {
     [action.payload.identifier]: updatedFormElement,
   });
 
-  console.log(updatedNewItemForm);
-
   let formIsValid = true;
 
   for (let identifier in updatedNewItemForm) {
@@ -108,12 +112,68 @@ const inputChanged = (state, action) => {
   });
 };
 
+const addToIncome = (state, action) => {
+  action.payload.event.preventDefault();
+
+  const updatedForm = getFormData(action.payload.itemData);
+
+  delete updatedForm.category;
+
+  const newForm = clearForm(state.form, updateObject);
+
+  return updateObject(state, {
+    incomeData: [...state.incomeData.slice(), updatedForm],
+    form: newForm,
+  });
+};
+
+const removeFromIncome = (state, action) => {
+  return updateObject(state, {
+    incomeData: [
+      ...state.incomeData.slice(0, action.payload.index),
+      ...state.incomeData.slice(action.payload.index + 1),
+    ],
+  });
+};
+
+const addToExpense = (state, action) => {
+  action.payload.event.preventDefault();
+
+  const updatedForm = getFormData(action.payload.itemData);
+
+  const newForm = clearForm(state.form, updateObject);
+
+  return updateObject(state, {
+    expenseData: [...state.expenseData.slice(), updatedForm],
+    form: newForm,
+  });
+};
+
+const removeFromExpense = (state, action) => {
+  return updateObject(state, {
+    expenseData: [
+      ...state.expenseData.slice(0, action.payload.index),
+      ...state.expenseData.slice(action.payload.index + 1),
+    ],
+  });
+};
+
+const editItem = (state, action) => {};
+
 const formReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionTypes.FORM_RENDER:
-      return state;
+      return { ...state };
     case actionTypes.FORM_INPUT_CHANGED:
       return inputChanged(state, action);
+    case actionTypes.ADD_ITEM_TO_INCOME:
+      return addToIncome(state, action);
+    case actionTypes.REMOVE_ITEM_FROM_INCOME:
+      return removeFromIncome(state, action);
+    case actionTypes.ADD_ITEM_TO_EXPENSE:
+      return addToExpense(state, action);
+    case actionTypes.REMOVE_ITEM_FROM_EXPENSE:
+      return removeFromExpense(state, action);
     default:
       return state;
   }

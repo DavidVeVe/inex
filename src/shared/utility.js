@@ -26,3 +26,23 @@ export const updateObject = (state, updatedProps) => {
     ...updatedProps,
   };
 };
+
+export const clearForm = (form, updateObject) => {
+  let newForm = {};
+
+  for (let key in form) {
+    newForm[key] = updateObject(form[key], { value: "" });
+  }
+
+  return newForm;
+};
+
+export const getFormData = (data) => {
+  let updatedForm = {};
+
+  for (let key in data) {
+    updatedForm[key] = data[key].value;
+  }
+
+  return updatedForm;
+};
