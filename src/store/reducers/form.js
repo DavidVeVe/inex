@@ -78,6 +78,8 @@ const INITIAL_STATE = {
       touched: false,
     },
   },
+  editing: false,
+  itemIndex: null,
   formIsValid: false,
 };
 
@@ -121,10 +123,23 @@ const addToIncome = (state, action) => {
 
   const newForm = clearForm(state.form, updateObject);
 
-  return updateObject(state, {
-    incomeData: [...state.incomeData.slice(), updatedForm],
-    form: newForm,
-  });
+  if (state.editing) {
+    return updateObject(state, {
+      incomeData: [
+        ...state.incomeData.slice(0, state.itemIndex),
+        updatedForm,
+        ...state.incomeData.slice(state.itemIndex + 1),
+      ],
+      form: newForm,
+      editing: false,
+    });
+  } else {
+    return updateObject(state, {
+      incomeData: [...state.incomeData.slice(), updatedForm],
+      form: newForm,
+      editing: false,
+    });
+  }
 };
 
 const removeFromIncome = (state, action) => {
@@ -143,10 +158,23 @@ const addToExpense = (state, action) => {
 
   const newForm = clearForm(state.form, updateObject);
 
-  return updateObject(state, {
-    expenseData: [...state.expenseData.slice(), updatedForm],
-    form: newForm,
-  });
+  if (state.editing) {
+    return updateObject(state, {
+      expenseData: [
+        ...state.expenseData.slice(0, state.itemIndex),
+        updatedForm,
+        ...state.expenseData.slice(state.itemIndex + 1),
+      ],
+      form: newForm,
+      editing: false,
+    });
+  } else {
+    return updateObject(state, {
+      expenseData: [...state.expenseData.slice(), updatedForm],
+      form: newForm,
+      editing: false,
+    });
+  }
 };
 
 const removeFromExpense = (state, action) => {
@@ -158,7 +186,23 @@ const removeFromExpense = (state, action) => {
   });
 };
 
-const editItem = (state, action) => {};
+const editItem = (state, action) => {
+  action.payload.event.stopPropagation();
+
+  let editableForm = {};
+
+  for (let key in state.form) {
+    editableForm[key] = updateObject(state.form[key], {
+      value: action.payload.data[action.payload.index][key],
+    });
+  }
+
+  return updateObject(state, {
+    form: editableForm,
+    editing: true,
+    itemIndex: action.payload.index,
+  });
+};
 
 const formReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -174,6 +218,8 @@ const formReducer = (state = INITIAL_STATE, action) => {
       return addToExpense(state, action);
     case actionTypes.REMOVE_ITEM_FROM_EXPENSE:
       return removeFromExpense(state, action);
+    case actionTypes.FORM_EDIT_ITEM:
+      return editItem(state, action);
     default:
       return state;
   }

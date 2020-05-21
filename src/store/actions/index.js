@@ -11,4 +11,5 @@ export {
   addToExpense,
   removeFromExpense,
   inputFormChanged,
+  editItem,
 } from "./form";

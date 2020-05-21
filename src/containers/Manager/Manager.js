@@ -11,7 +11,6 @@ import Description from "../../components/Description/Description";
 import Modal from "../../components/UI/Modal/Modal";
 import DeletePopup from "../../components/DeletePopup/DeletePopup";
 import menuIcon from "../../assets/icons/menu.png";
-import { updateObject } from "../../shared/utility";
 
 class ItemsManager extends Component {
   state = {
@@ -32,14 +31,12 @@ class ItemsManager extends Component {
   };
 
   itemEdited = (index, e) => {
-    e.stopPropagation();
-
-    const incomeData = updateObject(this.props.incomeData);
+    const incomeData = this.props.incomeData;
     const expenseData = this.props.expenseData;
 
-    console.log("Edit button clicked - incomeData:", incomeData);
-    console.log("Edit button clicked - expenseData:", expenseData);
-
+    this.props.incomeVersion
+      ? this.props.editItem(index, e, incomeData)
+      : this.props.editItem(index, e, expenseData);
     this.props.toggleModalEditForm();
 
     // this.setState((prevState) => {
@@ -185,6 +182,8 @@ const mapDispatchToProps = (dispatch) => {
     toggleModalDescription: () => dispatch(actions.toggleModalDescription()),
     toggleModalDeletePopup: () => dispatch(actions.toggleModalDeletePopup()),
     toggleModalEditForm: () => dispatch(actions.toggleModalEditForm()),
+    editItem: (index, event, data) =>
+      dispatch(actions.editItem(index, event, data)),
   };
 };
 

@@ -8,11 +8,11 @@ import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 
 class NewItemForm extends Component {
-  addItemHandler = (e) => {
+  addItemHandler = (e, index) => {
     if (this.props.incomeVersion) {
-      this.props.addToIncome(e, this.props.form);
+      this.props.addToIncome(e, this.props.form, index);
     } else {
-      this.props.addToExpense(e, this.props.form);
+      this.props.addToExpense(e, this.props.form, index);
     }
 
     this.props.toggleModalForm();
@@ -75,9 +75,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addToIncome: (e, itemData) => dispatch(actions.addToIncome(e, itemData)),
-    removeFromIncome: (index) => dispatch(actions.removeFromIncome(index)),
     addToExpense: (e, itemData) => dispatch(actions.addToExpense(e, itemData)),
-    removeFromExpense: (index) => dispatch(actions.removeFromExpense(index)),
     toggleModalForm: () => dispatch(actions.toggleModalForm()),
     inputFormChanged: (e, identifier) =>
       dispatch(actions.inputFormChanged(e, identifier)),
