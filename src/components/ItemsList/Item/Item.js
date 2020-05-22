@@ -18,7 +18,7 @@ const item = (props) => {
       <span className="item__name">{props.itemName}</span>
       <span className="item__amount">${props.amount}.00</span>
       <span className="item__date">{props.date}</span>
-      {props.version ? null : (
+      {props.incomeVersion ? null : (
         <span className="item__category">{props.category}</span>
       )}
       <div className="item__actions">

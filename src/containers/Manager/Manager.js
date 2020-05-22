@@ -29,15 +29,6 @@ class ItemsManager extends Component {
     this.props.toggleModalDeletePopup();
   };
 
-  itemEdited = (index, e) => {
-    const incomeData = this.props.incomeData;
-    const expenseData = this.props.expenseData;
-
-    this.props.incomeVersion
-      ? this.props.editItem(index, e, incomeData)
-      : this.props.editItem(index, e, expenseData);
-  };
-
   toggleDeletePopup = (index, e) => {
     e.stopPropagation();
 
@@ -81,18 +72,17 @@ class ItemsManager extends Component {
     return (
       <section className="expenseList__container">
         <DeletePopup
-          showPopup={this.props.showDeletePopup}
           togglePopup={this.toggleDeletePopup}
           itemDeleted={this.itemDeleted}
           itemIndex={this.state.selectedItemIndex}
           name={deleteItemName ? deleteItemName : {}}
         />
-        {this.props.showForm ? (
+        {this.props.showModal ? (
           <Modal
-            show={this.props.showForm}
+            show={this.props.showModal}
             clickClosed={this.props.toggleModalForm}
           >
-            <NewItemForm addItem={this.addItemHandler} />
+            <NewItemForm />
           </Modal>
         ) : (
           <Modal
@@ -119,8 +109,6 @@ class ItemsManager extends Component {
         <ItemsList
           // totalAmount={total}
           descriptionToggle={this.descriptionToggleHandler}
-          clickedEdited={this.itemEdited}
-          itemDeleted={this.itemDeleted}
           togglePopup={this.toggleDeletePopup}
         />
       </section>
@@ -132,11 +120,11 @@ const mapStateToProps = (state) => {
   return {
     incomeData: state.form.incomeData,
     expenseData: state.form.expenseData,
-    showForm: state.form.showForm,
+    showModal: state.form.showModal,
     showDescription: state.modal.showDescription,
-    showDeletePopup: state.modal.showDeletePopup,
     form: state.form.form,
     incomeVersion: state.form.incomeVersion,
+    editing: state.form.editing,
   };
 };
 
@@ -147,8 +135,6 @@ const mapDispatchToProps = (dispatch) => {
     toggleModalForm: () => dispatch(actions.toggleModalForm()),
     toggleModalDescription: () => dispatch(actions.toggleModalDescription()),
     toggleModalDeletePopup: () => dispatch(actions.toggleModalDeletePopup()),
-    editItem: (index, event, data) =>
-      dispatch(actions.editItem(index, event, data)),
   };
 };
 

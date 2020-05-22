@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 
 import "./ItemsList.css";
 
+import * as actions from "../../store/actions";
+
 import ListControls from "./ListControls/ListControls";
 import Item from "./Item/Item";
 
@@ -22,8 +24,8 @@ const ItemsList = (props) => {
         amount={item.amount}
         date={item.date}
         category={item.category}
-        itemEdited={(e) => props.clickedEdited(index, e)}
-        itemDeleted={(e) => props.itemDeleted(index, e)}
+        // itemEdited={(e) => props.clickedEdited(index, e)}
+        itemEdited={(e) => props.editItem(index, e)}
         clicked={() => props.descriptionToggle(index)}
         togglePopup={(e) => props.togglePopup(index, e)}
       />
@@ -39,7 +41,7 @@ const ItemsList = (props) => {
           <span>Nombre</span>
           <span>Cantidad</span>
           <span>Fecha</span>
-          {props.version ? null : <span>Categoria</span>}
+          {props.incomeVersion ? null : <span>Categoria</span>}
           <span></span>
         </section>
         {itemsValues.length >= 1 ? (
@@ -65,4 +67,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ItemsList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    editItem: (index, event) => dispatch(actions.editItem(index, event)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemsList);

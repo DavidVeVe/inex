@@ -22,13 +22,12 @@ export const inputFormChanged = (event, identifier) => {
   };
 };
 
-export const addToIncome = (event, itemData, index) => {
+export const addItem = (event, data) => {
   return {
-    type: actionTypes.ADD_ITEM_TO_INCOME,
+    type: actionTypes.ADD_ITEM,
     payload: {
       event: event,
-      itemData: itemData,
-      index: index,
+      data: data,
     },
   };
 };
@@ -42,16 +41,6 @@ export const removeFromIncome = (index) => {
   };
 };
 
-export const addToExpense = (event, itemData) => {
-  return {
-    type: actionTypes.ADD_ITEM_TO_EXPENSE,
-    payload: {
-      event: event,
-      itemData: itemData,
-    },
-  };
-};
-
 export const removeFromExpense = (index) => {
   return {
     type: actionTypes.REMOVE_ITEM_FROM_EXPENSE,
@@ -61,13 +50,12 @@ export const removeFromExpense = (index) => {
   };
 };
 
-export const editItem = (index, event, data) => {
+export const editItem = (index, event) => {
   return {
     type: actionTypes.FORM_EDIT_ITEM,
     payload: {
       event: event,
       index: index,
-      data: data,
     },
   };
 };

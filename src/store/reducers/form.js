@@ -81,8 +81,8 @@ const INITIAL_STATE = {
   editing: false,
   itemIndex: null,
   formIsValid: false,
-  showForm: false,
-  incomeVersion: false,
+  showModal: false,
+  incomeVersion: true,
 };
 
 const setVersion = (state, action) => {
@@ -120,16 +120,21 @@ const inputChanged = (state, action) => {
   });
 };
 
-const addToIncome = (state, action) => {
+const addItem = (state, action) => {
   action.payload.event.preventDefault();
 
-  const updatedForm = getFormData(action.payload.itemData);
+  let updatedForm = {};
 
-  delete updatedForm.category;
+  if (state.incomeVersion) {
+    updatedForm = getFormData(action.payload.data);
+    delete updatedForm.category;
+  } else {
+    updatedForm = getFormData(action.payload.data);
+  }
 
   const newForm = clearForm(state.form, updateObject);
 
-  if (state.editing) {
+  if (state.editing && state.incomeVersion) {
     return updateObject(state, {
       incomeData: [
         ...state.incomeData.slice(0, state.itemIndex),
@@ -138,12 +143,32 @@ const addToIncome = (state, action) => {
       ],
       form: newForm,
       editing: false,
+      showModal: false,
     });
-  } else {
+  } else if (!state.editing && state.incomeVersion) {
     return updateObject(state, {
       incomeData: [...state.incomeData.slice(), updatedForm],
       form: newForm,
       editing: false,
+      showModal: false,
+    });
+  } else if (state.editing && !state.incomeVersion) {
+    return updateObject(state, {
+      expenseData: [
+        ...state.expenseData.slice(0, state.itemIndex),
+        updatedForm,
+        ...state.expenseData.slice(state.itemIndex + 1),
+      ],
+      form: newForm,
+      editing: false,
+      showModal: false,
+    });
+  } else {
+    return updateObject(state, {
+      expenseData: [...state.expenseData.slice(), updatedForm],
+      form: newForm,
+      editing: false,
+      showModal: false,
     });
   }
 };
@@ -155,32 +180,6 @@ const removeFromIncome = (state, action) => {
       ...state.incomeData.slice(action.payload.index + 1),
     ],
   });
-};
-
-const addToExpense = (state, action) => {
-  action.payload.event.preventDefault();
-
-  const updatedForm = getFormData(action.payload.itemData);
-
-  const newForm = clearForm(state.form, updateObject);
-
-  if (state.editing) {
-    return updateObject(state, {
-      expenseData: [
-        ...state.expenseData.slice(0, state.itemIndex),
-        updatedForm,
-        ...state.expenseData.slice(state.itemIndex + 1),
-      ],
-      form: newForm,
-      editing: false,
-    });
-  } else {
-    return updateObject(state, {
-      expenseData: [...state.expenseData.slice(), updatedForm],
-      form: newForm,
-      editing: false,
-    });
-  }
 };
 
 const removeFromExpense = (state, action) => {
@@ -197,14 +196,22 @@ export const editItem = (state, action) => {
 
   let editableForm = {};
 
-  for (let key in state.form) {
-    editableForm[key] = updateObject(state.form[key], {
-      value: action.payload.data[action.payload.index][key],
-    });
+  if (state.incomeVersion) {
+    for (let key in state.form) {
+      editableForm[key] = updateObject(state.form[key], {
+        value: state.incomeData[action.payload.index][key],
+      });
+    }
+  } else {
+    for (let key in state.form) {
+      editableForm[key] = updateObject(state.form[key], {
+        value: state.expenseData[action.payload.index][key],
+      });
+    }
   }
 
   return updateObject(state, {
-    showForm: !state.showForm,
+    showModal: !state.showModal,
     form: editableForm,
     editing: true,
     itemIndex: action.payload.index,
@@ -215,7 +222,7 @@ export const toggleModalForm = (state, action) => {
   const newForm = clearForm(state.form, updateObject);
 
   return updateObject(state, {
-    showForm: !state.showForm,
+    showModal: !state.showModal,
     form: newForm,
     itemIndex: null,
   });
@@ -231,12 +238,10 @@ const formReducer = (state = INITIAL_STATE, action) => {
       return toggleModalForm(state, action);
     case actionTypes.FORM_INPUT_CHANGED:
       return inputChanged(state, action);
-    case actionTypes.ADD_ITEM_TO_INCOME:
-      return addToIncome(state, action);
+    case actionTypes.ADD_ITEM:
+      return addItem(state, action);
     case actionTypes.REMOVE_ITEM_FROM_INCOME:
       return removeFromIncome(state, action);
-    case actionTypes.ADD_ITEM_TO_EXPENSE:
-      return addToExpense(state, action);
     case actionTypes.REMOVE_ITEM_FROM_EXPENSE:
       return removeFromExpense(state, action);
     case actionTypes.FORM_EDIT_ITEM:

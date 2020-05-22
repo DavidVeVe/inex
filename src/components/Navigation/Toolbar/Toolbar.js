@@ -16,21 +16,30 @@ const Toolbar = (props) => {
     >
       <div className="toolbar__buttons">
         <div className="toolbar__controls">
-          <Button
-            clicked={props.setVersion}
-            className="boton"
-            width="30%"
-            btnType="white"
-          >
-            Ingresos
-          </Button>
-          <Button clicked={props.setVersion} width="30%" btnType="white">
-            Gastos
-          </Button>
+          {props.incomeVersion ? (
+            <Button clicked={props.setVersion} width="30%" btnType="white">
+              Gastos
+            </Button>
+          ) : (
+            <Button
+              clicked={props.setVersion}
+              className="boton"
+              width="30%"
+              btnType="white"
+            >
+              Ingresos
+            </Button>
+          )}
         </div>
       </div>
     </nav>
   );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    incomeVersion: state.form.incomeVersion,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -39,4 +48,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Toolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

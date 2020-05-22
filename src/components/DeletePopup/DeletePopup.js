@@ -1,6 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import "./DeletePopup.css";
+
+import * as actions from "../../store/actions";
 
 import Modal from "../UI/Modal/Modal";
 import Button from "../UI/Button/Button";
@@ -9,7 +12,7 @@ const deletePopup = (props) => {
   const index = props.itemIndex;
   return (
     <Modal
-      show={props.showPopup}
+      show={props.showDeletePopup}
       clickClosed={(e) => props.togglePopup(null, e)}
     >
       <div className="deletePopup__container">
@@ -44,4 +47,16 @@ const deletePopup = (props) => {
   );
 };
 
-export default deletePopup;
+const mapStateToProps = (state) => {
+  return {
+    showModal: state.form.showModal,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleModalDeletePopup: () => dispatch(actions.toggleModalDeletePopup()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(deletePopup);

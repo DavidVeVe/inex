@@ -8,16 +8,6 @@ import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 
 class NewItemForm extends Component {
-  addItemHandler = (e, index) => {
-    if (this.props.incomeVersion) {
-      this.props.addToIncome(e, this.props.form, index);
-    } else {
-      this.props.addToExpense(e, this.props.form, index);
-    }
-
-    this.props.toggleModalForm();
-  };
-
   render() {
     const formElementsArray = [];
 
@@ -29,7 +19,7 @@ class NewItemForm extends Component {
     }
 
     let form = (
-      <form className="newExpense__form" onSubmit={this.addItemHandler}>
+      <form className="newExpense__form">
         {formElementsArray.map((formElement) => {
           if (this.props.incomeVersion && formElement.id === "category") {
             return null;
@@ -46,7 +36,11 @@ class NewItemForm extends Component {
           }
         })}
         <div className="newExpense__btnWrapper">
-          <Button color="white" btnType="add" clicked={this.addItemHandler}>
+          <Button
+            color="white"
+            btnType="add"
+            clicked={(e) => this.props.addItem(e, this.props.form)}
+          >
             Guardar
           </Button>
           <Button
@@ -66,8 +60,6 @@ class NewItemForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    incomeData: state.form.incomeData,
-    expenseData: state.form.expenseData,
     form: state.form.form,
     incomeVersion: state.form.incomeVersion,
   };
@@ -75,8 +67,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToIncome: (e, itemData) => dispatch(actions.addToIncome(e, itemData)),
-    addToExpense: (e, itemData) => dispatch(actions.addToExpense(e, itemData)),
+    addItem: (e, data) => dispatch(actions.addItem(e, data)),
     toggleModalForm: () => dispatch(actions.toggleModalForm()),
     inputFormChanged: (e, identifier) =>
       dispatch(actions.inputFormChanged(e, identifier)),
