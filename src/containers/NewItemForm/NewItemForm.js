@@ -69,6 +69,7 @@ const mapStateToProps = (state) => {
     incomeData: state.form.incomeData,
     expenseData: state.form.expenseData,
     form: state.form.form,
+    incomeVersion: state.form.incomeVersion,
   };
 };
 

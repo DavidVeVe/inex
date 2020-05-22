@@ -14,7 +14,6 @@ import menuIcon from "../../assets/icons/menu.png";
 
 class ItemsManager extends Component {
   state = {
-    editable: false,
     deleteItemName: "",
     uxDescription: "",
     selectedItemIndex: null,
@@ -37,8 +36,6 @@ class ItemsManager extends Component {
     this.props.incomeVersion
       ? this.props.editItem(index, e, incomeData)
       : this.props.editItem(index, e, expenseData);
-
-    // this.props.toggleModalForm();
   };
 
   toggleDeletePopup = (index, e) => {
@@ -95,10 +92,7 @@ class ItemsManager extends Component {
             show={this.props.showForm}
             clickClosed={this.props.toggleModalForm}
           >
-            <NewItemForm
-              incomeVersion={this.props.incomeVersion}
-              addItem={this.addItemHandler}
-            />
+            <NewItemForm addItem={this.addItemHandler} />
           </Modal>
         ) : (
           <Modal
@@ -125,7 +119,6 @@ class ItemsManager extends Component {
         <ItemsList
           // totalAmount={total}
           descriptionToggle={this.descriptionToggleHandler}
-          version={this.props.incomeVersion}
           clickedEdited={this.itemEdited}
           itemDeleted={this.itemDeleted}
           togglePopup={this.toggleDeletePopup}
@@ -143,6 +136,7 @@ const mapStateToProps = (state) => {
     showDescription: state.modal.showDescription,
     showDeletePopup: state.modal.showDeletePopup,
     form: state.form.form,
+    incomeVersion: state.form.incomeVersion,
   };
 };
 

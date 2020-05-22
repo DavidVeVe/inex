@@ -9,14 +9,13 @@ import Item from "./Item/Item";
 const ItemsList = (props) => {
   let itemsValues;
 
-  props.version
+  props.incomeVersion
     ? (itemsValues = props.incomeData)
     : (itemsValues = props.expenseData);
 
   const items = itemsValues.map((item, index) => {
     return (
       <Item
-        version={props.version}
         key={item.itemName + index}
         itemId={index + 1}
         itemName={item.itemName}
@@ -34,7 +33,7 @@ const ItemsList = (props) => {
   return (
     <Fragment>
       <section className="itemList__container">
-        <ListControls version={props.version} total={props.totalAmount} />
+        <ListControls total={props.totalAmount} />
         <section className="itemList__tags">
           <span>Id</span>
           <span>Nombre</span>
@@ -62,6 +61,7 @@ const mapStateToProps = (state) => {
   return {
     incomeData: state.form.incomeData,
     expenseData: state.form.expenseData,
+    incomeVersion: state.form.incomeVersion,
   };
 };
 

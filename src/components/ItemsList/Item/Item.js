@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import "./Item.css";
 import deleteIcon from "../../../assets/icons/delete.png";
@@ -10,7 +11,7 @@ const item = (props) => {
       onClick={props.clicked}
       className={[
         "item__container",
-        props.version ? "item__income" : "item__expense",
+        props.incomeVersion ? "item__income" : "item__expense",
       ].join(" ")}
     >
       <span className="item__id">{props.itemId}</span>
@@ -38,4 +39,10 @@ const item = (props) => {
   );
 };
 
-export default item;
+const mapStateToProps = (state) => {
+  return {
+    incomeVersion: state.form.incomeVersion,
+  };
+};
+
+export default connect(mapStateToProps)(item);

@@ -18,7 +18,7 @@ const listControls = (props) => (
     >
       Nuevo
     </Button>
-    {props.version ? (
+    {props.incomeVersion ? (
       <p className="listControls__total">
         Ingresos total: <span>$ {props.total}.00</span>
       </p>
@@ -30,10 +30,16 @@ const listControls = (props) => (
   </div>
 );
 
+const mapStateToProps = (state) => {
+  return {
+    incomeVersion: state.form.incomeVersion,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleModalForm: () => dispatch(actions.toggleModalForm()),
   };
 };
 
-export default connect(null, mapDispatchToProps)(listControls);
+export default connect(mapStateToProps, mapDispatchToProps)(listControls);

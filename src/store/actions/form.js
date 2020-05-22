@@ -6,6 +6,12 @@ export const toggleModalForm = () => {
   };
 };
 
+export const setVersion = () => {
+  return {
+    type: actionTypes.SET_VERSION,
+  };
+};
+
 export const inputFormChanged = (event, identifier) => {
   return {
     type: actionTypes.FORM_INPUT_CHANGED,

@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+
+import * as actions from "../../../store/actions";
 
 import "./Toolbar.css";
 
@@ -14,14 +17,14 @@ const Toolbar = (props) => {
       <div className="toolbar__buttons">
         <div className="toolbar__controls">
           <Button
-            clicked={props.showIncome}
+            clicked={props.setVersion}
             className="boton"
             width="30%"
             btnType="white"
           >
             Ingresos
           </Button>
-          <Button clicked={props.showExpenses} width="30%" btnType="white">
+          <Button clicked={props.setVersion} width="30%" btnType="white">
             Gastos
           </Button>
         </div>
@@ -30,4 +33,10 @@ const Toolbar = (props) => {
   );
 };
 
-export default Toolbar;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setVersion: () => dispatch(actions.setVersion()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Toolbar);

@@ -8,4 +8,5 @@ export {
   removeFromExpense,
   inputFormChanged,
   editItem,
+  setVersion,
 } from "./form";

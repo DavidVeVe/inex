@@ -82,6 +82,11 @@ const INITIAL_STATE = {
   itemIndex: null,
   formIsValid: false,
   showForm: false,
+  incomeVersion: false,
+};
+
+const setVersion = (state, action) => {
+  return updateObject(state, { incomeVersion: !state.incomeVersion });
 };
 
 const inputChanged = (state, action) => {
@@ -212,6 +217,7 @@ export const toggleModalForm = (state, action) => {
   return updateObject(state, {
     showForm: !state.showForm,
     form: newForm,
+    itemIndex: null,
   });
 };
 
@@ -219,6 +225,8 @@ const formReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionTypes.FORM_RENDER:
       return { ...state };
+    case actionTypes.SET_VERSION:
+      return setVersion(state, action);
     case actionTypes.TOGGLE_MODAL_FORM:
       return toggleModalForm(state, action);
     case actionTypes.FORM_INPUT_CHANGED:
