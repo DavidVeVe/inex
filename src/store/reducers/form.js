@@ -136,7 +136,7 @@ const addItem = (state, action) => {
     updatedForm = getFormData(action.payload.data);
   }
 
-  updatedForm.date = updatedForm.date.split("-").reverse().join("-");
+  updatedForm.date = updatedForm.date.split("-").reverse().join("/");
 
   const newForm = clearForm(state.form, updateObject);
 
