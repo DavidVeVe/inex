@@ -7,13 +7,13 @@ import Button from "../UI/Button/Button";
 const Description = (props) => {
   return (
     <div className="description__container">
-      {props.descriptionValues.description ? (
+      {props.descriptionData.description ? (
         <Fragment>
           <p className="description__name">Nombre :</p>
-          <span>{props.descriptionValues.itemName}</span>
+          <span>{props.descriptionData.itemName}</span>
           <h3>Descripción:</h3>
           <p className="description__text">
-            {props.descriptionValues.description}
+            {props.descriptionData.description}
           </p>
         </Fragment>
       ) : (
@@ -24,11 +24,12 @@ const Description = (props) => {
         with="auto"
         fontSize=".8rem"
         btnType="add"
-        clicked={props.descriptionToggle}
+        clicked={props.showDescriptionInfo}
       >
         Ok
       </Button>
     </div>
   );
 };
+
 export default Description;

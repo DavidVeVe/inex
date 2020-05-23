@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "./App.css";
 
-import Manager from "./containers/Manager/Manager";
+import Manager from "./components/Manager/Manager";
 import Layout from "./hoc/Layout/Layout";
 
 function App() {

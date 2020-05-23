@@ -24,10 +24,9 @@ const ItemsList = (props) => {
         amount={item.amount}
         date={item.date}
         category={item.category}
-        // itemEdited={(e) => props.clickedEdited(index, e)}
         itemEdited={(e) => props.editItem(index, e)}
-        clicked={() => props.descriptionToggle(index)}
-        togglePopup={(e) => props.togglePopup(index, e)}
+        clicked={() => props.showDescriptionInfo(index)}
+        togglePopup={(e) => props.toggleDeletePopup(e, index)}
       />
     );
   });
@@ -48,7 +47,7 @@ const ItemsList = (props) => {
           items
         ) : (
           <p className="itemList__empty">
-            No hay registros{" "}
+            No hay registros
             <span role="img" aria-label="astronaut">
               👨‍🚀
             </span>
@@ -70,6 +69,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     editItem: (index, event) => dispatch(actions.editItem(index, event)),
+    toggleDeletePopup: (e, index) =>
+      dispatch(actions.toggleDeletePopup(e, index)),
+    showDescriptionInfo: (index) =>
+      dispatch(actions.showDescriptionInfo(index)),
   };
 };
 

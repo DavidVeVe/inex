@@ -9,12 +9,8 @@ import Modal from "../UI/Modal/Modal";
 import Button from "../UI/Button/Button";
 
 const deletePopup = (props) => {
-  const index = props.itemIndex;
   return (
-    <Modal
-      show={props.showDeletePopup}
-      clickClosed={(e) => props.togglePopup(null, e)}
-    >
+    <Modal show={props.showDeletePopup} clickClosed={props.toggleDeletePopup}>
       <div className="deletePopup__container">
         <p
           className="deletePopup__container-q"
@@ -23,10 +19,10 @@ const deletePopup = (props) => {
           ¿Estas seguro que deseas eliminar este registro?
         </p>
         <p className="deletePopup__name">Nombre:</p>
-        <p className="deletePopup__name-itemName">{props.name.itemName} </p>
+        <p className="deletePopup__name-itemName">{props.itemName} </p>
         <div className="deletePopup__btns">
           <Button
-            clicked={(event) => props.itemDeleted(index, event)}
+            clicked={props.removeItem}
             width="30%"
             color="white"
             btnType="add"
@@ -34,7 +30,7 @@ const deletePopup = (props) => {
             Eliminar
           </Button>
           <Button
-            clicked={(e) => props.togglePopup(null, e)}
+            clicked={(e) => props.toggleDeletePopup(e, null)}
             width="30%"
             color="white"
             btnType="cancel"
@@ -49,13 +45,15 @@ const deletePopup = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    showModal: state.form.showModal,
+    showDeletePopup: state.form.showDeletePopup,
+    itemName: state.form.itemName,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleModalDeletePopup: () => dispatch(actions.toggleModalDeletePopup()),
+    removeItem: () => dispatch(actions.removeItem()),
+    toggleDeletePopup: (e) => dispatch(actions.toggleDeletePopup(e)),
   };
 };
 

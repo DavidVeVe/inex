@@ -1,11 +1,10 @@
-export { toggleModalDescription, toggleModalDeletePopup } from "./modal";
-
 export {
   toggleModalForm,
   addItem,
-  removeFromIncome,
-  removeFromExpense,
+  removeItem,
   inputFormChanged,
   editItem,
   setVersion,
+  showDescriptionInfo,
+  toggleDeletePopup,
 } from "./form";

@@ -6,6 +6,16 @@ export const toggleModalForm = () => {
   };
 };
 
+export const toggleDeletePopup = (e, index) => {
+  return {
+    type: actionTypes.TOGGLE_DELETE_POPUP,
+    payload: {
+      event: e,
+      index: index,
+    },
+  };
+};
+
 export const setVersion = () => {
   return {
     type: actionTypes.SET_VERSION,
@@ -32,21 +42,9 @@ export const addItem = (event, data) => {
   };
 };
 
-export const removeFromIncome = (index) => {
+export const removeItem = () => {
   return {
-    type: actionTypes.REMOVE_ITEM_FROM_INCOME,
-    payload: {
-      index: index,
-    },
-  };
-};
-
-export const removeFromExpense = (index) => {
-  return {
-    type: actionTypes.REMOVE_ITEM_FROM_EXPENSE,
-    payload: {
-      index: index,
-    },
+    type: actionTypes.REMOVE_ITEM,
   };
 };
 
@@ -55,6 +53,15 @@ export const editItem = (index, event) => {
     type: actionTypes.FORM_EDIT_ITEM,
     payload: {
       event: event,
+      index: index,
+    },
+  };
+};
+
+export const showDescriptionInfo = (index) => {
+  return {
+    type: actionTypes.SHOW_DESCRIPTION,
+    payload: {
       index: index,
     },
   };

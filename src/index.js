@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
 import App from "./App";
-import modalReducer from "./store/reducers/modal";
 import formReducer from "./store/reducers/form";
 
 const composeEnhancers =
@@ -15,7 +14,6 @@ const composeEnhancers =
     : null || compose;
 
 const rootReducer = combineReducers({
-  modal: modalReducer,
   form: formReducer,
 });
 
