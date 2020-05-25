@@ -71,10 +71,8 @@ const INITIAL_STATE = {
         placeholder: "Descripción",
       },
       value: "",
-      validation: {
-        required: true,
-      },
-      valid: false,
+      validation: {},
+      valid: true,
       touched: false,
     },
   },
@@ -139,6 +137,8 @@ const addItem = (state, action) => {
   updatedForm.date = updatedForm.date.split("-").reverse().join("/");
 
   const newForm = clearForm(state.form, updateObject);
+
+  console.log(updatedForm);
 
   if (state.editing && state.incomeVersion) {
     return updateObject(state, {

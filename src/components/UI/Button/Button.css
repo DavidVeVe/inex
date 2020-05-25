@@ -34,3 +34,12 @@
 .white:hover {
   background-color: #cacaca;
 }
+
+.disabled {
+  background-color: #cec8c6;
+  color: #333333;
+}
+
+.disabled:hover {
+  background-color: #cec8c6;
+}

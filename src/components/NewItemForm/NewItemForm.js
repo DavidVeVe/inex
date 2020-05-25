@@ -30,12 +30,17 @@ const newItemForm = (props) => {
               elementConfig={formElement.config.elementConfig}
               changed={(e) => props.inputFormChanged(e, formElement.id)}
               value={formElement.config.value}
+              invalid={!formElement.config.valid}
+              shouldValidate={formElement.config.validation}
+              valueType={formElement.id}
+              touched={formElement.config.touched}
             />
           );
         }
       })}
       <div className="newExpense__btnWrapper">
         <Button
+          disabled={!props.formIsValid}
           color="white"
           btnType="add"
           clicked={(e) => props.addItem(e, props.form)}
@@ -60,6 +65,7 @@ const mapStateToProps = (state) => {
   return {
     form: state.form.form,
     incomeVersion: state.form.incomeVersion,
+    formIsValid: state.form.formIsValid,
   };
 };
 
