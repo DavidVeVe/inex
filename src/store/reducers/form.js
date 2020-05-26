@@ -27,6 +27,7 @@ const INITIAL_STATE = {
       elementType: "select",
       elementConfig: {
         options: [
+          { value: "", displayValue: "-- categoría --" },
           { value: "Comida", displayValue: "Comida" },
           { value: "Salud", displayValue: "Salud" },
           { value: "Servicios", displayValue: "Servicios" },
@@ -34,7 +35,7 @@ const INITIAL_STATE = {
           { value: "Otro", displayValue: "Otro" },
         ],
       },
-      value: "Comida",
+      value: "",
       validation: {},
       valid: true,
     },
@@ -106,9 +107,13 @@ const inputChanged = (state, action) => {
     }
   );
 
+  console.log(updatedFormElement);
+
   const updatedNewItemForm = updateObject(state.form, {
     [action.payload.identifier]: updatedFormElement,
   });
+
+  console.log(updatedNewItemForm);
 
   let formIsValid = true;
 
@@ -137,8 +142,6 @@ const addItem = (state, action) => {
   updatedForm.date = updatedForm.date.split("-").reverse().join("/");
 
   const newForm = clearForm(state.form, updateObject);
-
-  console.log(updatedForm);
 
   if (state.editing && state.incomeVersion) {
     return updateObject(state, {
