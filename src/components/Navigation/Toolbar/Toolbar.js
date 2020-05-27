@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -8,6 +8,14 @@ import Button from "../../UI/Button/Button";
 import classes from "./Toolbar.module.css";
 
 const Toolbar = (props) => {
+  const [isLogin, setIsLogin] = useState(false);
+
+  const switchAuthMode = () => {
+    setIsLogin(!isLogin);
+  };
+
+  console.log(isLogin);
+
   return (
     <nav
       className={[
@@ -30,17 +38,7 @@ const Toolbar = (props) => {
           </div>
         ) : null}
         <div className={classes.authenticateBtns}>
-          {!props.authenticated ? (
-            <Link
-              to="/auth"
-              className={classes.authenticateBtn}
-              clicked="ohla"
-              btnType="white"
-              width="35%"
-            >
-              Iniciar Sesión
-            </Link>
-          ) : (
+          {props.authenticated ? (
             <Link
               to="/"
               className={classes.authenticateBtn}
@@ -49,6 +47,17 @@ const Toolbar = (props) => {
               width="35%"
             >
               Cerrar Sesión
+            </Link>
+          ) : (
+            <Link
+              onClick={switchAuthMode}
+              to={isLogin ? "/" : "/auth"}
+              className={classes.authenticateBtn}
+              clicked="ohla"
+              btnType="white"
+              width="35%"
+            >
+              {isLogin ? "Home" : "Iniciar Sesión"}
             </Link>
           )}
         </div>

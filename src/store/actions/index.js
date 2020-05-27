@@ -8,3 +8,5 @@ export {
   showDescriptionInfo,
   toggleDeletePopup,
 } from "./form";
+
+export { inputAuthFormChanged } from "./auth";

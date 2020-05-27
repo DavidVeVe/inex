@@ -7,6 +7,7 @@ import thunk from "redux-thunk";
 
 import App from "./App";
 import formReducer from "./store/reducers/form";
+import authReducer from "./store/reducers/auth";
 
 const composeEnhancers =
   process.env.NODE_ENV === "development"
@@ -15,6 +16,7 @@ const composeEnhancers =
 
 const rootReducer = combineReducers({
   form: formReducer,
+  auth: authReducer,
 });
 
 const store = createStore(

@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
+import * as actions from "../../store/actions";
 
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
@@ -6,52 +9,8 @@ import classes from "./Auth.module.css";
 
 class Auth extends Component {
   state = {
-    controls: {
-      name: {
-        elementType: "input",
-        elementConfig: {
-          type: "text",
-          placeholder: "Nombre",
-        },
-        value: "",
-        validation: {
-          required: true,
-        },
-        valid: false,
-        touched: false,
-      },
-      email: {
-        elementType: "input",
-        elementConfig: {
-          type: "email",
-          placeholder: "Email",
-        },
-        value: "",
-        validation: {
-          required: true,
-          isEmail: true,
-        },
-        valid: false,
-        touched: false,
-      },
-      password: {
-        elementType: "input",
-        elementConfig: {
-          type: "password",
-          placeholder: "Password",
-        },
-        value: "",
-        validation: {
-          required: true,
-          minLength: 6,
-        },
-        valid: false,
-        touched: false,
-      },
-    },
-    isLogIn: false,
+    isLogIn: true,
   };
-
   switchAuthModeHandler = () => {
     this.setState({ isLogIn: !this.state.isLogIn });
   };
@@ -59,10 +18,10 @@ class Auth extends Component {
   render() {
     const formElementsArray = [];
 
-    for (let key in this.state.controls) {
+    for (let key in this.props.authForm) {
       formElementsArray.push({
         id: key,
-        config: this.state.controls[key],
+        config: this.props.authForm[key],
       });
     }
 
@@ -77,7 +36,7 @@ class Auth extends Component {
           shoulValidate={formElement.config.validation}
           touched={formElement.config.touched}
           valueType={formElement.id}
-          // changed={(e) =>}
+          changed={(e) => this.props.inputAuthFormChanged(e, formElement.id)}
         />
       );
     });
@@ -90,34 +49,32 @@ class Auth extends Component {
       <section className={classes.formContainer}>
         <form>
           {form}
-          {this.state.isLogIn ? (
-            <Button color="white" btnType="add2">
-              Iniciar Sesión
-            </Button>
-          ) : (
-            <Button color="white" btnType="add2">
-              Crear Cuenta
-            </Button>
-          )}
-          {this.state.isLogIn ? (
-            <span
-              onClick={this.switchAuthModeHandler}
-              className={classes.logInBtn}
-            >
-              Crear Cuenta
-            </span>
-          ) : (
-            <span
-              onClick={this.switchAuthModeHandler}
-              className={classes.logInBtn}
-            >
-              Iniciar Sesion
-            </span>
-          )}
+          <Button color="white" btnType="add2">
+            {this.state.isLogIn ? "Iniciar Sesión" : "Crear Cuenta"}
+          </Button>
+          <span
+            onClick={this.switchAuthModeHandler}
+            className={classes.logInBtn}
+          >
+            {this.state.isLogIn ? "Crear Cuenta" : "Iniciar Sesión"}
+          </span>
         </form>
       </section>
     );
   }
 }
 
-export default Auth;
+const mapStateToProps = (state) => {
+  return {
+    authForm: state.auth.authForm,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    inputAuthFormChanged: (e, identifier) =>
+      dispatch(actions.inputAuthFormChanged(e, identifier)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
