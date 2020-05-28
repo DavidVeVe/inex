@@ -9,4 +9,10 @@ export {
   toggleDeletePopup,
 } from "./form";
 
-export { inputAuthFormChanged } from "./auth";
+export {
+  inputAuthFormChanged,
+  auth,
+  logout,
+  setAuthRedirectPath,
+  authCheckState,
+} from "./auth";

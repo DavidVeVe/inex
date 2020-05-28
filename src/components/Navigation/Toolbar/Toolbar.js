@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import * as actions from "../../../store/actions";
 
@@ -13,8 +13,6 @@ const Toolbar = (props) => {
   const switchAuthMode = () => {
     setIsLogin(!isLogin);
   };
-
-  console.log(isLogin);
 
   return (
     <nav
@@ -40,11 +38,9 @@ const Toolbar = (props) => {
         <div className={classes.authenticateBtns}>
           {props.authenticated ? (
             <Link
-              to="/"
+              to="/logout"
+              onClick={switchAuthMode}
               className={classes.authenticateBtn}
-              clicked="ohla"
-              btnType="white"
-              width="35%"
             >
               Cerrar Sesión
             </Link>
@@ -53,11 +49,8 @@ const Toolbar = (props) => {
               onClick={switchAuthMode}
               to={isLogin ? "/" : "/auth"}
               className={classes.authenticateBtn}
-              clicked="ohla"
-              btnType="white"
-              width="35%"
             >
-              {isLogin ? "Home" : "Iniciar Sesión"}
+              {isLogin ? "Inicio" : "Iniciar Sesión"}
             </Link>
           )}
         </div>
@@ -69,6 +62,7 @@ const Toolbar = (props) => {
 const mapStateToProps = (state) => {
   return {
     incomeVersion: state.form.incomeVersion,
+    authenticated: state.auth.token !== null,
   };
 };
 
@@ -78,4 +72,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Toolbar)
+);

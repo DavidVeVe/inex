@@ -12,7 +12,7 @@ const listControls = (props) => (
     <Button
       width="15%"
       fontSize=".9rem"
-      btnType="add"
+      btnType="add2"
       color="white"
       clicked={props.toggleModalForm}
     >

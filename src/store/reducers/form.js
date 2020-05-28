@@ -107,13 +107,9 @@ const inputChanged = (state, action) => {
     }
   );
 
-  console.log(updatedFormElement);
-
   const updatedNewItemForm = updateObject(state.form, {
     [action.payload.identifier]: updatedFormElement,
   });
-
-  console.log(updatedNewItemForm);
 
   let formIsValid = true;
 

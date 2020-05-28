@@ -42,13 +42,13 @@ const newItemForm = (props) => {
         <Button
           disabled={!props.formIsValid}
           color="white"
-          btnType="add"
+          btnType="add2"
           clicked={(e) => props.addItem(e, props.form)}
         >
           Guardar
         </Button>
         <Button
-          color="white"
+          color="#b95023"
           btnType="cancel"
           type="button"
           clicked={props.toggleModalForm}

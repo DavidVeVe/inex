@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 
 import "./Manager.css";
 
@@ -14,7 +13,7 @@ import DeletePopup from "../DeletePopup/DeletePopup";
 import menuIcon from "../../assets/icons/menu.png";
 
 const itemsManager = (props) => {
-  let manager = (
+  return (
     <section className="expenseList__container">
       <DeletePopup />
       {props.showModal ? (
@@ -43,17 +42,9 @@ const itemsManager = (props) => {
       ) : (
         <h1>Gestor de gastos</h1>
       )}
-      <ItemsList
-      // totalAmount={total}
-      />
+      <ItemsList />
     </section>
   );
-
-  if (!props.authenticated) {
-    manager = <Redirect to="/" />;
-  }
-
-  return manager;
 };
 
 const mapStateToProps = (state) => {
@@ -63,6 +54,7 @@ const mapStateToProps = (state) => {
     descriptionData: state.form.descriptionData,
     incomeVersion: state.form.incomeVersion,
     formIsValid: state.form.formIsValid,
+    authenticated: state.auth.token !== null,
   };
 };
 

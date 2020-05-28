@@ -21,11 +21,12 @@
 }
 
 .cancel {
-  background-color: #db7953;
+  /* background-color: #db7953; */
+  font-weight: bold;
 }
 
 .cancel:hover {
-  background-color: #f77541;
+  background-color: #f8cebc;
 }
 
 .white {
