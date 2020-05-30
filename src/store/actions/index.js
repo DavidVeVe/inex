@@ -1,10 +1,9 @@
 export {
   toggleModalForm,
-  addItem,
   removeItem,
-  inputFormChanged,
   editItem,
   setVersion,
+  addNewItem,
   showDescriptionInfo,
   toggleDeletePopup,
 } from "./form";

@@ -1,6 +1,9 @@
 export const SET_VERSION = "SET_VERSION";
 
-export const ADD_ITEM = "ADD_ITEM";
+export const ADD_ITEM_SUCCESS = "ADD_ITEM_SUCCESS";
+export const ADD_ITEM_START = "ADD_ITEM_START";
+export const ADD_ITEM_FAIL = "ADD_ITEM_FAIL";
+
 export const REMOVE_ITEM = "REMOVE_ITEM";
 
 export const TOGGLE_MODAL_FORM = "TOGGLE_MODAL_FORM";

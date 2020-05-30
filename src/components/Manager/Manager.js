@@ -13,6 +13,7 @@ import DeletePopup from "../DeletePopup/DeletePopup";
 import menuIcon from "../../assets/icons/menu.png";
 
 const itemsManager = (props) => {
+  console.log(props.token);
   return (
     <section className="expenseList__container">
       <DeletePopup />
@@ -55,6 +56,7 @@ const mapStateToProps = (state) => {
     incomeVersion: state.form.incomeVersion,
     formIsValid: state.form.formIsValid,
     authenticated: state.auth.token !== null,
+    token: state.auth.token,
   };
 };
 

@@ -1,3 +1,4 @@
+import axios from "../../axios-manager";
 import * as actionTypes from "./actionTypes";
 
 export const toggleModalForm = () => {
@@ -22,22 +23,18 @@ export const setVersion = () => {
   };
 };
 
-export const inputFormChanged = (event, identifier) => {
+export const addItemStart = () => {
   return {
-    type: actionTypes.FORM_INPUT_CHANGED,
-    payload: {
-      event: event,
-      identifier: identifier,
-    },
+    type: actionTypes.ADD_ITEM_START,
   };
 };
 
-export const addItem = (event, data) => {
+export const addItemSuccess = (id, itemData) => {
   return {
-    type: actionTypes.ADD_ITEM,
+    type: actionTypes.ADD_ITEM_SUCCESS,
     payload: {
-      event: event,
-      data: data,
+      itemId: id,
+      itemData: itemData,
     },
   };
 };
@@ -58,11 +55,35 @@ export const editItem = (index, event) => {
   };
 };
 
+export const addItemFail = (error) => {
+  return {
+    type: actionTypes.ADD_ITEM_FAIL,
+    payload: {
+      error: error,
+    },
+  };
+};
+
 export const showDescriptionInfo = (index) => {
   return {
     type: actionTypes.SHOW_DESCRIPTION,
     payload: {
       index: index,
     },
+  };
+};
+
+export const addNewItem = (itemData) => {
+  return (dispatch) => {
+    dispatch(addItemStart());
+
+    axios
+      .post("/items.json", itemData)
+      .then((response) => {
+        dispatch(addItemSuccess(response.payload.name, itemData));
+      })
+      .catch((error) => {
+        dispatch(addItemFail(error));
+      });
   };
 };
