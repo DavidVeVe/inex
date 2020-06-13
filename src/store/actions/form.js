@@ -87,3 +87,49 @@ export const addNewItem = (itemData) => {
       });
   };
 };
+
+export const fetchItemsStart = () => {
+  return {
+    type: actionTypes.FETCH_ITEMS_START,
+  };
+};
+
+export const fetchItemsSuccess = (items) => {
+  return {
+    type: actionTypes.FETCH_ITEMS_SUCCESS,
+    payload: {
+      items: items,
+    },
+  };
+};
+
+export const fetchItemsFail = (error) => {
+  return {
+    type: actionTypes.FETCH_ITEMS_FAIL,
+    payload: {
+      error: error,
+    },
+  };
+};
+
+export const fetchItems = (token, userId) => {
+  return (dispatch) => {
+    dispatch(fetchItemsStart());
+
+    const queryParams = `?auth=${token}&orderBy="userdId"&equalTo="${userId}"`;
+
+    axios
+      .get("/items.json", queryParams)
+      .then((response) => {
+        const fetchedItems = [];
+
+        for (let key in response.data) {
+          fetchedItems.push({ ...response.data[key], id: key });
+          dispatch(fetchItemsSuccess(fetchedItems));
+        }
+      })
+      .catch((error) => {
+        dispatch(fetchItemsFail(error));
+      });
+  };
+};

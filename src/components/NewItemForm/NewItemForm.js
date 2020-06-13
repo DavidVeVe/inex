@@ -132,6 +132,7 @@ class newItemForm extends Component {
     const newForm = clearForm(this.state.newItemForm, updateObject);
 
     let type;
+
     this.props.incomeVersion ? (type = "income") : (type = "expense");
 
     const item = {
@@ -242,7 +243,6 @@ const mapStateToProps = (state) => {
   return {
     form: state.form.form,
     incomeVersion: state.form.incomeVersion,
-    formIsValid: state.form.formIsValid,
     userId: state.auth.userId,
   };
 };

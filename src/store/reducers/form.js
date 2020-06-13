@@ -7,7 +7,6 @@ const INITIAL_STATE = {
   expenseData: [],
   editing: false,
   itemIndex: null,
-  formIsValid: false,
   showModal: false,
   incomeVersion: true,
   descriptionData: "",
@@ -122,6 +121,28 @@ export const toggleModalForm = (state, action) => {
   });
 };
 
+const fetchItemsStart = (state, action) => {
+  return updateObject(state, {
+    loading: true,
+  });
+};
+
+const fetchItemsSucces = (state, action) => {
+  const fetchedIncomeData = [];
+  const fetchedExpenseData = [];
+
+  action.payload.items.map((element) => {
+    element.type === "income"
+      ? fetchedIncomeData.push(...element)
+      : fetchedExpenseData.push(...element);
+  });
+
+  return updateObject(state, {
+    incomeData: fetchedIncomeData,
+    expenseData: fetchedExpenseData,
+  });
+};
+
 const formReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionTypes.FORM_RENDER:
@@ -140,6 +161,10 @@ const formReducer = (state = INITIAL_STATE, action) => {
       return showDescriptionInfo(state, action);
     case actionTypes.TOGGLE_DELETE_POPUP:
       return toggleDeletePopup(state, action);
+    case actionTypes.FETCH_ITEMS_START:
+      return fetchItemsStart(state, action);
+    case actionTypes.FETCH_ITEMS_SUCCESS:
+      return fetchItemsSucces(state, action);
     default:
       return state;
   }

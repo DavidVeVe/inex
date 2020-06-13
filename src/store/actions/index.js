@@ -4,6 +4,7 @@ export {
   editItem,
   setVersion,
   addNewItem,
+  fetchItems,
   showDescriptionInfo,
   toggleDeletePopup,
 } from "./form";

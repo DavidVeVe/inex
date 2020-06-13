@@ -14,13 +14,8 @@ import Logout from "./containers/Auth/Logout/Logout";
 
 class App extends Component {
   state = {
-    showMenu: false,
+    showMenu: true,
   };
-  // const [showMenu, setShowMenu] = useState(false);
-
-  // const showMenuHandler = () => {
-  //   setShowMenu(!showMenu);
-  // };
 
   componentDidMount() {
     this.props.autoLogin();
